@@ -85,7 +85,6 @@ void OrderBook::handleOrder(Order& order)
         else
         {
             if(!m_priceBuyOrderMap[price].matchOrder(order)){
-                std::cout << "at matching sell "<<order.quantity <<std::endl;
                 addSellOrder(order);
             }
 

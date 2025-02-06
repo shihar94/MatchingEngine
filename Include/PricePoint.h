@@ -41,6 +41,7 @@ class PricePoint
         bool matchOrder(Order& order);
         Order returnOrder();
         int getAvailableOrders();
+        
 };
 
 #endif

@@ -47,6 +47,8 @@ void PricePoint::addOrder(Order order)
 
         //m_tail = tempNode;
     }
+
+    m_availableOrders++;
 }
 
 
@@ -84,13 +86,23 @@ Order PricePoint::returnOrder()
 bool PricePoint::matchOrder(Order& order)
 {
 
-    std::cout << "Matching order" << std::endl;
+    std::cout << "Matching order for order id: " << order.order_id<< std::endl;
+    if(m_availableOrders <= 0)
+    {
+        std::cout << "returning here" << std::endl;
+        return false;
+
+    }
+    
     //retrieve the top order from the list first 
     OrderNode* tempNode = m_head;
     if(tempNode->order.quantity ==  order.quantity)
     {
         m_head = tempNode->next;
+        std::cout << order.order_id <<" order  id matched with order id: " << tempNode->order.order_id << std::endl;
         delete tempNode;
+        m_availableOrders = m_availableOrders - 1;
+        
         return true;
     }
     else if(tempNode->order.quantity > order.quantity)
@@ -112,6 +124,7 @@ bool PricePoint::matchOrder(Order& order)
                 std::cout << "order.quantity = order.quantity - curr->order.quantity:  " << order.quantity << std::endl;
                 m_head = curr->next;
                 delete curr;
+                m_availableOrders = m_availableOrders - 1;
                 curr = m_head;
             }
             else if(order.quantity - curr->order.quantity < 0)
@@ -126,6 +139,7 @@ bool PricePoint::matchOrder(Order& order)
                 std::cout << "3order.quantity = order.quantity - curr->order.quantity:  " << order.quantity  << std::endl;
                 m_head = curr->next;
                 delete curr;
+                m_availableOrders = m_availableOrders - 1;
                 curr = m_head;
             }
             //order.quantity = order.quantity - curr->order.quantity;
@@ -145,5 +159,5 @@ bool PricePoint::matchOrder(Order& order)
 
 int PricePoint::getAvailableOrders()
 {
-    
+
 }

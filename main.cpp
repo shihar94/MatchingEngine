@@ -17,21 +17,28 @@ int  main(){
     OrderBook m_orderBook;
     //buy orders
     Order order1{1, 100.2, 10, ORDER_TYPE::BUY};
-
+    m_orderBook.handleOrder(order1);
+    m_orderBook.printOrderBook();
 
     //sell orders
     Order order2{2, 100.2, 10, ORDER_TYPE::SELL};
+    m_orderBook.handleOrder(order2); 
+
     Order order3{3, 100.2, 100, ORDER_TYPE::SELL};
+    m_orderBook.handleOrder(order3);
+
     Order order4{4, 100.2, 100, ORDER_TYPE::SELL};
+
+
     Order order5{5, 100.2, 100, ORDER_TYPE::SELL};
 
 
 
-    m_orderBook.handleOrder(order1);
-    m_orderBook.handleOrder(order2); 
-    m_orderBook.handleOrder(order3);
-    //m_orderBook.handleOrder(order4);
-    //m_orderBook.handleOrder(order5);
+    //m_orderBook.handleOrder(order1);
+    
+    
+    m_orderBook.handleOrder(order4);
+    m_orderBook.handleOrder(order5);
     m_orderBook.printOrderBook();
 
     Order order6{6, 100.2, 200, ORDER_TYPE::BUY}; //buy match orders
