@@ -27,8 +27,10 @@ struct OrderNode{
 class PricePoint
 {
     private:
-        PricePoint* head;
-        PricePoint* tail;
+        OrderNode* m_head = nullptr;
+        OrderNode* m_tail;
+        double m_pricePoint;
+
     public:
         PricePoint();
         ~PricePoint();

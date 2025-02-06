@@ -15,17 +15,23 @@ class OrderBook
     public:
         OrderBook();
         ~OrderBook();
+
         void addOrder(Order order);
+
+        void addBuyOrder(Order order);
+        void addSellOrder(Order order);
+
         void removeOrder(Order order);
         void handleOrder(Order order);
         void printOrderBook();
         void matchOrders();
 
-        
+
 
 
     private:
-        std::map<priceVal , PricePoint> priceOrderMap;
+        std::map<priceVal , PricePoint> m_priceBuyOrderMap;
+        std::map<priceVal , PricePoint> m_priceSellOrderMap;
 };
 
 

@@ -5,6 +5,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
+#include "OrderBook.h"
+
 /*
 ntohs -->> network to host short
 */
@@ -12,6 +14,17 @@ ntohs -->> network to host short
 int  main(){
     // we don't need to initiliaze socket on MacOS
 
+    OrderBook m_orderBook;
+    Order order1{1, 100.1, 10, ORDER_TYPE::BUY};
+    Order order2{2, 100.1, 100, ORDER_TYPE::SELL};
+    
+    m_orderBook.addOrder(order1);
+    m_orderBook.addOrder(order2);
+
+    m_orderBook.printOrderBook();
+
+    return 0;
+    
     // create a socket
     int listening = socket(AF_INET, SOCK_STREAM, 0);
     if(listening == -1){
@@ -82,5 +95,8 @@ int  main(){
     close(clientSocket);
 
     // we don't need to shutdown socket on MacOS
+
+
+    OrderBook orderBook;
     return 0;
 }
