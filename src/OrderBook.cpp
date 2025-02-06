@@ -15,18 +15,6 @@ OrderBook::~OrderBook()
     std::cout << "OrderBook destructor called" << std::endl;
 }
 
-void OrderBook::addOrder(Order order)
-{
-    if(order.type == ORDER_TYPE::BUY)
-    {
-        addBuyOrder(order);
-    }
-    else
-    {
-        addSellOrder(order);
-    }
-}
-
 void OrderBook::addSellOrder(Order order)
 {
     double price = order.price;
@@ -59,14 +47,48 @@ void OrderBook::addBuyOrder(Order order)
 
 }
 
-void OrderBook::removeOrder(Order order)
+void OrderBook::cancelOrder(Order order)
 {
     //remove the order from the orderbook
 }   
 
-void OrderBook::handleOrder(Order order)
+void OrderBook::handleOrder(Order& order)
 {
     //handle the order
+
+    //1. check if the order is a buy or sell order
+    //2. if buy order, check if there is a matching sell order
+    //3. if sell order, check if there is a matching buy order
+
+    if(order.type == ORDER_TYPE::BUY)
+    {
+        double price = order.price;
+        if(m_priceSellOrderMap.find(price) == m_priceSellOrderMap.end())
+        {
+            addBuyOrder(order);
+        }
+        else
+        {
+            if(!m_priceSellOrderMap[price].matchOrder(order)){
+                addBuyOrder(order);
+            }
+        }
+    }
+    else
+    {
+        double price = order.price;
+        if(m_priceBuyOrderMap.find(price) == m_priceBuyOrderMap.end())
+        {
+            addSellOrder(order);
+        }
+        else
+        {
+            if(!m_priceBuyOrderMap[price].matchOrder(order)){
+                addSellOrder(order);
+            }
+
+        }
+    }
 }   
 
 void OrderBook::printOrderBook()
@@ -89,7 +111,4 @@ void OrderBook::printOrderBook()
     }
 }   
 
-void OrderBook::matchOrders()
-{
-    //match the orders
-}
+

@@ -16,11 +16,23 @@ int  main(){
 
     OrderBook m_orderBook;
     Order order1{1, 100.1, 10, ORDER_TYPE::BUY};
-    Order order2{2, 100.1, 100, ORDER_TYPE::SELL};
-    
-    m_orderBook.addOrder(order1);
-    m_orderBook.addOrder(order2);
+    Order order2{2, 100.2, 10, ORDER_TYPE::SELL};
+    Order order3{3, 100.2, 100, ORDER_TYPE::SELL};
+    Order order4{4, 100.2, 100, ORDER_TYPE::SELL};
+    Order order5{5, 100.2, 100, ORDER_TYPE::SELL};
 
+
+
+
+   // m_orderBook.handleOrder(order1);
+    m_orderBook.handleOrder(order2);
+    m_orderBook.handleOrder(order3);
+    m_orderBook.handleOrder(order4);
+    m_orderBook.handleOrder(order5);
+    m_orderBook.printOrderBook();
+
+    Order order6{6, 100.2, 200, ORDER_TYPE::BUY};
+    m_orderBook.handleOrder(order6);
     m_orderBook.printOrderBook();
 
     return 0;

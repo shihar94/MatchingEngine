@@ -80,3 +80,65 @@ Order PricePoint::returnOrder()
 {
     
 }
+
+bool PricePoint::matchOrder(Order order)
+{
+
+    std::cout << "Matching order" << std::endl;
+    //retrieve the top order from the list first 
+    OrderNode* tempNode = m_head;
+    if(tempNode->order.quantity ==  order.quantity)
+    {
+        m_head = tempNode->next;
+        delete tempNode;
+        return true;
+    }
+    else if(tempNode->order.quantity > order.quantity)
+    {
+        tempNode->order.quantity -= order.quantity;
+        return true;
+    }
+    else if(tempNode->order.quantity < order.quantity) //handle the condition of partial fill
+    {   
+        std::cout <<"partial fill start with order quantity : " << order.quantity << std::endl;
+        int quantity = order.quantity;
+        OrderNode* curr = m_head;
+
+        while(order.quantity > 0 && curr->next != nullptr)
+        {
+            if(order.quantity - curr->order.quantity == 0)
+            {
+                order.quantity = order.quantity - curr->order.quantity;
+                m_head = curr->next;
+                delete curr;
+                curr = m_head;
+            }
+            else if(order.quantity - curr->order.quantity < 0)
+            {
+                curr->order.quantity = curr->order.quantity - order.quantity;
+                order.quantity = 0 ;
+            }else if(order.quantity - curr->order.quantity >0)
+            {
+                order.quantity = order.quantity - curr->order.quantity;
+                m_head = curr->next;
+                delete curr;
+                curr = m_head;
+            }
+
+
+            //order.quantity = order.quantity - curr->order.quantity;
+            std::cout <<"order quantity left " << order.quantity<< std::endl;
+
+
+            
+
+        }
+
+        std::cout <<"final quantity left " << order.quantity << std::endl;
+        std::cout <<"partial fill end" << std::endl;
+        return true;
+    }
+
+    return false;
+}   
+

@@ -37,6 +37,7 @@ class PricePoint
         void addOrder(Order order);
         void removeOrder(Order order);
         void printOrders();
+        bool matchOrder(Order order);
         Order returnOrder();
 };
 
