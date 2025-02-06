@@ -70,6 +70,7 @@ void OrderBook::handleOrder(Order& order)
         else
         {
             if(!m_priceSellOrderMap[price].matchOrder(order)){
+                std::cout << order.quantity <<std::endl;
                 addBuyOrder(order);
             }
         }
@@ -84,6 +85,7 @@ void OrderBook::handleOrder(Order& order)
         else
         {
             if(!m_priceBuyOrderMap[price].matchOrder(order)){
+                std::cout << "at matching sell "<<order.quantity <<std::endl;
                 addSellOrder(order);
             }
 
@@ -95,7 +97,8 @@ void OrderBook::printOrderBook()
 {
     //print the orderbook
     std::map<priceVal , PricePoint>::iterator it;
-    std::cout << "BUY" << std::endl;
+    std::cout << "\nBUY" << std::endl;
+    std::cout <<"OrderID     " << "Price    " << "  Quantity   " << " Type " << std::endl;
     for(it = m_priceBuyOrderMap.begin(); it != m_priceBuyOrderMap.end(); it++)
     {
         //std::cout << "Price: " << it->first << std::endl;
@@ -103,7 +106,7 @@ void OrderBook::printOrderBook()
     }
 
     std::cout << "SELL" << std::endl;
-
+    std::cout <<"OrderID     " << "Price    " << "  Quantity   " << " Type " << std::endl;
     for(it = m_priceSellOrderMap.begin(); it != m_priceSellOrderMap.end(); it++)
     {
         //std::cout << "Price: " << it->first << std::endl;

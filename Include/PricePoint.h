@@ -30,6 +30,7 @@ class PricePoint
         OrderNode* m_head = nullptr;
         OrderNode* m_tail;
         double m_pricePoint;
+        int m_availableOrders = 0;
 
     public:
         PricePoint();
@@ -37,8 +38,9 @@ class PricePoint
         void addOrder(Order order);
         void removeOrder(Order order);
         void printOrders();
-        bool matchOrder(Order order);
+        bool matchOrder(Order& order);
         Order returnOrder();
+        int getAvailableOrders();
 };
 
 #endif

@@ -15,7 +15,11 @@ int  main(){
     // we don't need to initiliaze socket on MacOS
 
     OrderBook m_orderBook;
-    Order order1{1, 100.1, 10, ORDER_TYPE::BUY};
+    //buy orders
+    Order order1{1, 100.2, 10, ORDER_TYPE::BUY};
+
+
+    //sell orders
     Order order2{2, 100.2, 10, ORDER_TYPE::SELL};
     Order order3{3, 100.2, 100, ORDER_TYPE::SELL};
     Order order4{4, 100.2, 100, ORDER_TYPE::SELL};
@@ -23,17 +27,16 @@ int  main(){
 
 
 
-
-   // m_orderBook.handleOrder(order1);
-    m_orderBook.handleOrder(order2);
+    m_orderBook.handleOrder(order1);
+    m_orderBook.handleOrder(order2); 
     m_orderBook.handleOrder(order3);
-    m_orderBook.handleOrder(order4);
-    m_orderBook.handleOrder(order5);
+    //m_orderBook.handleOrder(order4);
+    //m_orderBook.handleOrder(order5);
     m_orderBook.printOrderBook();
 
-    Order order6{6, 100.2, 200, ORDER_TYPE::BUY};
-    m_orderBook.handleOrder(order6);
-    m_orderBook.printOrderBook();
+    Order order6{6, 100.2, 200, ORDER_TYPE::BUY}; //buy match orders
+    //m_orderBook.handleOrder(order6);
+    //m_orderBook.printOrderBook();
 
     return 0;
     

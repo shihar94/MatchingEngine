@@ -3,7 +3,7 @@
 
 PricePoint::PricePoint()
 {
-    std::cout << "PricePoint constructor called for price: " << std::endl;
+    //std::cout << "PricePoint constructor called for price: " << std::endl;
     
 }
 
@@ -57,8 +57,8 @@ void PricePoint::removeOrder(Order order)
 
 void PricePoint::printOrders()
 {
-    std::cout << "\nPrinting orders for price point\n" << std::endl;
-    std::cout <<"OrderID     " << "Price    " << "  Quantity   " << " Type " << std::endl;
+    //std::cout << "\nPrinting orders for price point\n" << std::endl;
+    
 
 
     OrderNode* tempNode = m_head;
@@ -81,7 +81,7 @@ Order PricePoint::returnOrder()
     
 }
 
-bool PricePoint::matchOrder(Order order)
+bool PricePoint::matchOrder(Order& order)
 {
 
     std::cout << "Matching order" << std::endl;
@@ -104,11 +104,12 @@ bool PricePoint::matchOrder(Order order)
         int quantity = order.quantity;
         OrderNode* curr = m_head;
 
-        while(order.quantity > 0 && curr->next != nullptr)
+        while(order.quantity > 0 && curr != nullptr)
         {
             if(order.quantity - curr->order.quantity == 0)
             {
                 order.quantity = order.quantity - curr->order.quantity;
+                std::cout << "order.quantity = order.quantity - curr->order.quantity:  " << order.quantity << std::endl;
                 m_head = curr->next;
                 delete curr;
                 curr = m_head;
@@ -116,29 +117,33 @@ bool PricePoint::matchOrder(Order order)
             else if(order.quantity - curr->order.quantity < 0)
             {
                 curr->order.quantity = curr->order.quantity - order.quantity;
+                std::cout << "curr->order.quantity = curr->order.quantity - order.quantity:  " << curr->order.quantity << std::endl;
                 order.quantity = 0 ;
+
             }else if(order.quantity - curr->order.quantity >0)
             {
                 order.quantity = order.quantity - curr->order.quantity;
+                std::cout << "3order.quantity = order.quantity - curr->order.quantity:  " << order.quantity  << std::endl;
                 m_head = curr->next;
                 delete curr;
                 curr = m_head;
             }
-
-
             //order.quantity = order.quantity - curr->order.quantity;
             std::cout <<"order quantity left " << order.quantity<< std::endl;
-
-
-            
-
         }
-
-        std::cout <<"final quantity left " << order.quantity << std::endl;
+        std::cout <<"\nfinal quantity left " << order.quantity << std::endl;
         std::cout <<"partial fill end" << std::endl;
-        return true;
-    }
 
+        if(order.quantity == 0 )
+        {
+            return true;
+        }   
+    }
     return false;
 }   
 
+
+int PricePoint::getAvailableOrders()
+{
+    
+}
