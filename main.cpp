@@ -30,8 +30,8 @@ int  main(){
     //m_orderBook.printOrderBook();
 
     //sell orders
-    Order order2{2, 100, 10, ORDER_TYPE::SELL};
-    //m_orderBook.handleOrder(order2); 
+    Order order2{2, 102, 10, ORDER_TYPE::SELL};
+    m_orderBook.handleOrder(order2); 
 
     Order order3{3, 100, 100, ORDER_TYPE::SELL};
     //m_orderBook.handleOrder(order3);
@@ -119,7 +119,7 @@ int  main(){
         {
             
         }
-        if(n == sizeof(Order) && (oNew.type <=2))
+        if(n == sizeof(Order) && oNew.type <=2)
         {
             std::cout << oNew.order_id << " " << oNew.price << " "<< oNew.quantity << " " << oNew.type<< std::endl;
             Order O1 ; 
