@@ -11,41 +11,50 @@
 ntohs -->> network to host short
 */
 
+void printPID()
+{
+    pid_t pid = getpid();
+    std::cout << pid << " pid\n";
+}
+
 int  main(){
     // we don't need to initiliaze socket on MacOS
 
+    printPID();
+   
+
     OrderBook m_orderBook;
     //buy orders
-    Order order1{1, 100.2, 10, ORDER_TYPE::BUY};
-    m_orderBook.handleOrder(order1);
-    m_orderBook.printOrderBook();
+    Order order1{1, 100, 10, ORDER_TYPE::BUY};
+    //m_orderBook.handleOrder(order1);
+    //m_orderBook.printOrderBook();
 
     //sell orders
-    Order order2{2, 100.2, 10, ORDER_TYPE::SELL};
-    m_orderBook.handleOrder(order2); 
+    Order order2{2, 100, 10, ORDER_TYPE::SELL};
+    //m_orderBook.handleOrder(order2); 
 
-    Order order3{3, 100.2, 100, ORDER_TYPE::SELL};
-    m_orderBook.handleOrder(order3);
+    Order order3{3, 100, 100, ORDER_TYPE::SELL};
+    //m_orderBook.handleOrder(order3);
 
-    Order order4{4, 100.2, 100, ORDER_TYPE::SELL};
+    Order order4{4, 100, 100, ORDER_TYPE::SELL};
 
 
-    Order order5{5, 100.2, 100, ORDER_TYPE::SELL};
+    Order order5{5, 100, 100, ORDER_TYPE::SELL};
 
 
 
     //m_orderBook.handleOrder(order1);
     
     
-    m_orderBook.handleOrder(order4);
-    m_orderBook.handleOrder(order5);
-    m_orderBook.printOrderBook();
-
-    Order order6{6, 100.2, 200, ORDER_TYPE::BUY}; //buy match orders
-    //m_orderBook.handleOrder(order6);
+    //m_orderBook.handleOrder(order4);
+    //m_orderBook.handleOrder(order5);
     //m_orderBook.printOrderBook();
 
-    return 0;
+    Order order6{6, 100, 200, ORDER_TYPE::BUY}; //buy match orders
+   // m_orderBook.handleOrder(order6);
+    //m_orderBook.printOrderBook();
+
+    //return 0;
     
     // create a socket
     int listening = socket(AF_INET, SOCK_STREAM, 0);
@@ -96,7 +105,38 @@ int  main(){
     char buf[4096];
 
     while(true){
+
+
         memset(buf, 0, 4096);
+        Order oNew;
+        oNew.order_id = 0;
+        oNew.price = 0;
+        oNew.quantity = 0;
+        oNew.type = (ORDER_TYPE)1;
+        int n = read(clientSocket, &oNew, sizeof(Order));
+        
+        if(n < 0 )
+        {
+            
+        }
+        if(n == sizeof(Order) && (oNew.type <=2))
+        {
+            std::cout << oNew.order_id << " " << oNew.price << " "<< oNew.quantity << " " << oNew.type<< std::endl;
+            Order O1 ; 
+            O1.order_id = oNew.order_id;
+            O1.price = oNew.price;
+
+            O1.quantity = oNew.quantity;
+            O1.type = oNew.type;
+            m_orderBook.handleOrder(O1);
+            m_orderBook.printOrderBook();
+        }
+        
+       // return 0;
+        
+
+        //return 0;
+        /*
         // wait for client to send data
         int bytesReceived = recv(clientSocket, buf, 4096, 0);
         if (bytesReceived == -1)
@@ -110,7 +150,7 @@ int  main(){
         }
         std::cout << std::string(buf, 0, bytesReceived) << std::endl;         
         //Echo message back to client
-        send(clientSocket, buf, bytesReceived + 1, 0);
+        send(clientSocket, buf, bytesReceived + 1, 0);*/
     }
 
     // close the socket

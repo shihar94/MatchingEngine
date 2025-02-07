@@ -13,7 +13,7 @@ enum ORDER_TYPE
 struct Order
 {
     int order_id;
-    double price;
+    int price;
     int quantity;
     ORDER_TYPE type;
 };
@@ -28,8 +28,8 @@ class PricePoint
 {
     private:
         OrderNode* m_head = nullptr;
-        OrderNode* m_tail;
-        double m_pricePoint;
+        //OrderNode* m_tail;
+        //double m_pricePoint;
         int m_availableOrders = 0;
 
     public:
@@ -41,7 +41,7 @@ class PricePoint
         bool matchOrder(Order& order);
         Order returnOrder();
         int getAvailableOrders();
-        
+
 };
 
 #endif

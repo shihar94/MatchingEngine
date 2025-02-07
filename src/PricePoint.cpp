@@ -113,7 +113,6 @@ bool PricePoint::matchOrder(Order& order)
     else if(tempNode->order.quantity < order.quantity) //handle the condition of partial fill
     {   
         std::cout <<"partial fill start with order quantity : " << order.quantity << std::endl;
-        int quantity = order.quantity;
         OrderNode* curr = m_head;
 
         while(order.quantity > 0 && curr != nullptr)

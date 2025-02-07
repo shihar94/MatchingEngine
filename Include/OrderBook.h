@@ -7,7 +7,7 @@
 //for each price point it will maintain a linkedlist of orders which 
 //price point lists 
 
-using priceVal = double;
+using priceVal = int;
 
 class OrderBook
 {
