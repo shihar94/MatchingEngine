@@ -40,6 +40,7 @@ void OrderSubmit::generateNewOrder(std::string& clientID)
     std::string id = clientID + std::to_string(m_order.order_id);
     strcpy(m_order.clientOrderId , id.c_str());
     m_order.price = 78;
+    m_order.val = 120.90;
     m_order.quantity = 100;
     if(m_order.order_id %2 == 0)
     {   

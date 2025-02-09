@@ -102,7 +102,7 @@ void Server::loop(int clientSocket)
 
         if(n == sizeof(Order) && oNew.type <=2)
         {
-            std::cout<<oNew.clientOrderId <<" "<<oNew.symbol <<" " << oNew.order_id << " " << oNew.price << " "<< oNew.quantity << " " << oNew.type<< std::endl;
+            std::cout<< oNew.val<<" "<<oNew.clientOrderId <<" "<<oNew.symbol <<" " << oNew.order_id << " " << oNew.price << " "<< oNew.quantity << " " << oNew.type<< std::endl;
             //exit(1)
         }
         std::lock_guard<std::mutex> lock(om);
