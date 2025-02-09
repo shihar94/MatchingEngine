@@ -1,13 +1,7 @@
-#include <cstring>
-#include <iostream>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <sstream>
-#include "OrderSubmit.h"
-#include <sys/types.h>
-#include <unistd.h>
 
+
+#include "OrderSubmit.h"
+#include "Client.h"
 
 void printPID()
 {
@@ -15,7 +9,7 @@ void printPID()
     std::cout << pid << " pid\n";
 }
 
-int main()
+int main(int argc , char* argv[])
 {
 
     printPID();
@@ -23,49 +17,27 @@ int main()
     OrderSubmit orderSubmit;
     Order order = orderSubmit.requestOrder();
    
-
+    if(argc < 2)
+    {   
+        std::cout << "./Trader portNo" << std::endl;
+        return 1;
+    }
+    printPID();
+    int port = std::stoi((argv[1]));
    
-    //std::cout << order.quantity<<std::endl;
-   // return 0;
+    
+    Client client(port);
+    client.init();
+    client.start();
+    client.loop();
 
-
-
-    // creating socket
-    int clientSocket = socket(AF_INET, SOCK_STREAM, 0);
-
-    // specifying address
-    sockaddr_in serverAddress;
-    serverAddress.sin_family = AF_INET;
-    serverAddress.sin_port = htons(54000);
-    serverAddress.sin_addr.s_addr = INADDR_ANY;
-
-    // sending connection request
-    connect(clientSocket, (struct sockaddr*)&serverAddress,
-            sizeof(serverAddress));
-
-
-
-    FILE* client = fdopen(clientSocket, "r+");
-	setbuf(client, NULL);
+    
 
     
 
     // sending data
-    const char* message = "Hello, server!";
-    send(clientSocket, message, strlen(message), 0);
-
-    while(true)
-    {
-        if(fwrite(&order, 1, sizeof(order), client) != sizeof(order))
-	    {
-		    fprintf(stderr, "Failed to write command\n");
-		    return 1;
-	    }
-        //send(clientSocket, message, strlen(message), 0);
-        usleep(10000* 1000);
-    }
-    // closing socket
-    close(clientSocket);
+    
+    
 
     return 0;
 }
