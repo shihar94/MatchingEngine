@@ -4,10 +4,20 @@
 ---
 
 ## Building and Running The project
-Building The server and running it
+Building The server and running it.
 ```bash
-$ ./build
+$ mkdir build && cd build
 $ cmake ..
 $ make Matching_Engine 
 $./Matching_Engine portNo
 ```
+
+Building the client and running it.
+```bash
+$ cd Trader 
+$ mkdir build && cd build
+$ cmake ..
+$ make Trader 
+$./Trader portNo clientId
+```
+
