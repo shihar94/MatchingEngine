@@ -1,5 +1,5 @@
 #include "Server.h"
-
+#include <vector>
 std::mutex om;
 Server::Server(int port)
 {
@@ -84,7 +84,14 @@ void Server::loop(int clientSocket)
             m_orderBookS[std::string(oNew.symbol)]=new OrderBook(std::string(oNew.symbol));
             std::cout<<"Hello\n";
         }
-        m_orderBookS[std::string(oNew.symbol)]->handleOrder(oNew);
+        std::vector<TradeReport> matchedTrades;
+        m_orderBookS[std::string(oNew.symbol)]->handleOrder(oNew , matchedTrades);
+        for(int i = 0 ; i < matchedTrades.size() ; i++)
+        {
+            int n = write(m_clientSocket,&matchedTrades[i],sizeof(TradeReport));
+            
+        }
+          
         std::cout<<"Hello\n";
         m_orderBookS[std::string(oNew.symbol)]->printOrderBook();
     }

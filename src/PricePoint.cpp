@@ -15,7 +15,7 @@ PricePoint::~PricePoint()
 }
 
 
-void PricePoint::addOrder(Order order)
+void PricePoint::addOrder(Order order , std::vector<TradeReport>& tradeReport)
 {
     /*
     std::cout << "Adding order to price point" << std::endl;
@@ -48,7 +48,7 @@ void PricePoint::addOrder(Order order)
 
         //m_tail = tempNode;
     }
-
+    tradeReport.push_back(newOrder(order));
     m_availableOrders++;
 }
 
@@ -83,7 +83,7 @@ void PricePoint::printOrders()
 }
 
 
-bool PricePoint::matchOrder(Order& order)
+bool PricePoint::matchOrder(Order& order , std::vector<TradeReport>& matchedTrades)
 {
 
    // std::cout << "Matching order for order id: " << order.clientOrderId<< std::endl;
@@ -93,12 +93,14 @@ bool PricePoint::matchOrder(Order& order)
         return false;
 
     }
-    std::vector<Order> matchedOrder;
+
+    //std::vector<TradeReport> matchedTrades;
     //retrieve the top order from the list first 
     OrderNode* tempNode = m_head;
     if(tempNode->order.quantity ==  order.quantity)
     {
-        matchedOrder.push_back(tempNode->order);
+        
+        matchedTrades.push_back(createTradeMatches(order,tempNode->order));
         m_head = tempNode->next;
         
         delete tempNode;
@@ -108,6 +110,7 @@ bool PricePoint::matchOrder(Order& order)
     }
     else if(tempNode->order.quantity > order.quantity)
     {
+        matchedTrades.push_back(createTradeMatches(order,tempNode->order));
         tempNode->order.quantity -= order.quantity;
         return true;
     }
@@ -120,6 +123,7 @@ bool PricePoint::matchOrder(Order& order)
         {
             if(order.quantity - curr->order.quantity == 0)
             {
+                matchedTrades.push_back(createTradeMatches(order,curr->order));
                 order.quantity = order.quantity - curr->order.quantity;
                 std::cout << "order.quantity = order.quantity - curr->order.quantity:  " << order.quantity << std::endl;
                 m_head = curr->next;
@@ -129,12 +133,14 @@ bool PricePoint::matchOrder(Order& order)
             }
             else if(order.quantity - curr->order.quantity < 0)
             {
+                matchedTrades.push_back(createTradeMatches(order,curr->order));
                 curr->order.quantity = curr->order.quantity - order.quantity;
                 std::cout << "curr->order.quantity = curr->order.quantity - order.quantity:  " << curr->order.quantity << std::endl;
                 order.quantity = 0 ;
 
             }else if(order.quantity - curr->order.quantity >0)
             {
+                matchedTrades.push_back(createTradeMatches(order,curr->order));
                 order.quantity = order.quantity - curr->order.quantity;
                 std::cout << "3order.quantity = order.quantity - curr->order.quantity:  " << order.quantity  << std::endl;
                 m_head = curr->next;
@@ -159,4 +165,41 @@ bool PricePoint::matchOrder(Order& order)
 int PricePoint::getAvailableOrders()
 {
     return m_availableOrders;
+}
+
+
+TradeReport PricePoint::createTradeMatches(Order& primary_order , Order& secondary_order)
+{
+    //given two orders create the tradereport for the matched order and return 
+    //primary order is the main order which triggered the match 
+
+    //secondary order is the other corresponding order
+    TradeReport tr; 
+    strcpy(tr.symbol , primary_order.symbol);
+    strcpy(tr.clientOrderId , primary_order.clientOrderId);
+    tr.type = TRADE_MATCHES::NEW;
+    tr.quantityLeft = primary_order.quantity;
+    tr.quantityMatched= primary_order.quantity -secondary_order.quantity;
+    strcpy(tr.matchedClientOrderId, secondary_order.clientOrderId);
+    tr.price = primary_order.price;
+    tr.own_order_id = primary_order.order_id;
+    tr.other_order_id = secondary_order.order_id;
+
+
+}
+
+TradeReport PricePoint::newOrder(Order& primary_order)
+{
+    TradeReport tr; 
+    strcpy(tr.symbol , primary_order.symbol);
+    strcpy(tr.clientOrderId , primary_order.clientOrderId);
+    tr.type = TRADE_MATCHES::NEW;
+    tr.quantityLeft = primary_order.quantity;
+    tr.quantityMatched = 0;
+    strcpy(tr.matchedClientOrderId, primary_order.clientOrderId);
+    tr.price = primary_order.price;
+    tr.own_order_id = primary_order.order_id;
+    tr.other_order_id = primary_order.order_id;
+
+    return tr;
 }

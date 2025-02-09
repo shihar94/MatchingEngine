@@ -10,6 +10,13 @@ enum ORDER_TYPE
     SELL = 2 
 };
 
+enum TRADE_MATCHES
+{
+    NEW = 0,
+    FILL = 1 ,
+    PFILL = 2
+};
+
 struct Order
 {
     char clientOrderId[11];
@@ -19,6 +26,19 @@ struct Order
     int prize;
     int quantity;
     ORDER_TYPE type;
+};
+
+struct TradeReport
+{
+    char symbol[4];
+    char matchedClientOrderId[11];
+    char clientOrderId[11];
+    double price;
+    int own_order_id;
+    int other_order_id;
+    int quantityMatched;
+    int quantityLeft;
+    TRADE_MATCHES type;
 };
 
 

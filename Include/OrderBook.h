@@ -18,13 +18,13 @@ class OrderBook
 
 
         void cancelOrder(Order order);
-        void handleOrder(Order& order);
+        void handleOrder(Order& order , std::vector<TradeReport>& matchedTrades);
         void printOrderBook();
 
     private:
 
-        void addBuyOrder(Order order);
-        void addSellOrder(Order order);
+        void addBuyOrder(Order order , std::vector<TradeReport>& matchedTrades);
+        void addSellOrder(Order order, std::vector<TradeReport>& matchedTrades);
 
     private:
 

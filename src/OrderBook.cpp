@@ -15,21 +15,21 @@ OrderBook::~OrderBook()
     std::cout << "OrderBook destructor called" << std::endl;
 }
 
-void OrderBook::addSellOrder(Order order)
+void OrderBook::addSellOrder(Order order , std::vector<TradeReport>& matchedTrades)
 {
     double price = order.price;
 
     if(m_priceSellOrderMap.find(price) != m_priceSellOrderMap.end())
     {
-        m_priceSellOrderMap[price].addOrder(order);
+        m_priceSellOrderMap[price].addOrder(order,matchedTrades);
     }
     else
     {
-        m_priceSellOrderMap[price].addOrder(order);
+        m_priceSellOrderMap[price].addOrder(order, matchedTrades);
     }
 }
 
-void OrderBook::addBuyOrder(Order order)
+void OrderBook::addBuyOrder(Order order, std::vector<TradeReport>& matchedTrades)
 {
     //add the order to the orderbook
     //1 retrieve the price point for the map 
@@ -38,11 +38,11 @@ void OrderBook::addBuyOrder(Order order)
 
     if(m_priceBuyOrderMap.find(price) != m_priceBuyOrderMap.end())
     {
-        m_priceBuyOrderMap[price].addOrder(order);
+        m_priceBuyOrderMap[price].addOrder(order,matchedTrades);
     }
     else
     {
-        m_priceBuyOrderMap[price].addOrder(order);
+        m_priceBuyOrderMap[price].addOrder(order,matchedTrades);
     }
 
 }
@@ -53,7 +53,7 @@ void OrderBook::cancelOrder(Order order)
     //handle cancel orders
 }   
 
-void OrderBook::handleOrder(Order& order)
+void OrderBook::handleOrder(Order& order , std::vector<TradeReport>& matchedTrades)
 {
     //handle the order
 
@@ -66,13 +66,13 @@ void OrderBook::handleOrder(Order& order)
         double price = order.price;
         if(m_priceSellOrderMap.find(price) == m_priceSellOrderMap.end())
         {
-            addBuyOrder(order);
+            addBuyOrder(order , matchedTrades);
         }
         else
         {
-            if(!m_priceSellOrderMap[price].matchOrder(order)){
+            if(!m_priceSellOrderMap[price].matchOrder(order , matchedTrades)){
                 std::cout << order.quantity <<std::endl;
-                addBuyOrder(order);
+                addBuyOrder(order , matchedTrades);
             }
         }
     }
@@ -81,12 +81,12 @@ void OrderBook::handleOrder(Order& order)
         double price = order.price;
         if(m_priceBuyOrderMap.find(price) == m_priceBuyOrderMap.end())
         {
-            addSellOrder(order);
+            addSellOrder(order , matchedTrades);
         }
         else
         {
-            if(!m_priceBuyOrderMap[price].matchOrder(order)){
-                addSellOrder(order);
+            if(!m_priceBuyOrderMap[price].matchOrder(order , matchedTrades)){
+                addSellOrder(order , matchedTrades);
             }
 
         }

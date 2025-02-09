@@ -42,6 +42,9 @@ void OrderSubmit::generateNewOrder(std::string& clientID)
     m_order.prize = 78;
     m_order.price = 120.90;
     m_order.quantity = 100;
+    m_order.type = ORDER_TYPE::SELL;
+    strcpy(m_order.symbol , "ABCD");
+    /*
     if(m_order.order_id %2 == 0)
     {   
        m_order.type = ORDER_TYPE::BUY;
@@ -51,9 +54,9 @@ void OrderSubmit::generateNewOrder(std::string& clientID)
     else
     {
         m_order.type = ORDER_TYPE::SELL;
-        strcpy(m_order.symbol , "ABCX");
+        strcpy(m_order.symbol , "ABCD");
         
-    }
+    }*/
     
     
     std::cout << m_orderId <<std::endl;

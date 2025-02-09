@@ -36,17 +36,27 @@ void Client::loop()
     const char* message = "Hello, server!";
     //send(m_clientSocket, message, strlen(message), 0);
     Order order;
+    int i = 0 ; 
     while(true)
     {
         //request the command details from client 
-
-        order = orderGenerator->getOrder(m_clientID);
+        if(i==0)
+        {
+            order = orderGenerator->getOrder(m_clientID);
+            i++;
+            if(fwrite(&order, 1, sizeof(order), m_client) != sizeof(order))
+	        {
+		        fprintf(stderr, "Failed to write command\n");
+		        exit(1);
+	        }
+        }
         
-        if(fwrite(&order, 1, sizeof(order), m_client) != sizeof(order))
-	    {
-		    fprintf(stderr, "Failed to write command\n");
-		    exit(1);
-	    }
+        
+        
+        TradeReport tr;
+        int n = fread(&tr,1,sizeof(TradeReport),m_client);
+        std::cout <<tr.clientOrderId <<" "<<tr.matchedClientOrderId << " " <<tr.other_order_id << " " <<tr.price <<std::endl;
+        
         //send(m_clientSocket, message, strlen(message), 0);
         usleep(1000* 1000);
     }
