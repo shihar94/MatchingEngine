@@ -85,7 +85,10 @@ void PricePoint::printOrders()
 bool PricePoint::matchOrder(Order& order)
 {
 
-    std::cout << "Matching order for order id: " << order.order_id<< std::endl;
+   // std::cout << "Matching order for order id: " << order.clientOrderId<< std::endl;
+   
+
+
     if(m_availableOrders <= 0)
     {
         std::cout << "returning here" << std::endl;
@@ -98,7 +101,6 @@ bool PricePoint::matchOrder(Order& order)
     if(tempNode->order.quantity ==  order.quantity)
     {
         m_head = tempNode->next;
-        std::cout << order.order_id <<" order  id matched with order id: " << tempNode->order.order_id << std::endl;
         delete tempNode;
         m_availableOrders = m_availableOrders - 1;
         

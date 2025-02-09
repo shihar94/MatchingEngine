@@ -20,7 +20,6 @@ class PricePoint
         //OrderNode* m_tail;
         //double m_pricePoint;
         int m_availableOrders = 0;
-
     public:
         PricePoint();
         ~PricePoint();

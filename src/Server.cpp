@@ -11,7 +11,6 @@ Server::Server(int port)
         std::cerr << "Can't create a socket! Quiting..."<< std::endl;
         exit(1);
     }
-
     //initialize OrderBook to handle Orders
    // m_orderBook = new OrderBook();
 
