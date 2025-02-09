@@ -1,6 +1,7 @@
 #include "PricePoint.h"
 #include <iostream>
-
+#include <vector>
+#include "defs.h"
 PricePoint::PricePoint()
 {
     //std::cout << "PricePoint constructor called for price: " << std::endl;
@@ -86,21 +87,20 @@ bool PricePoint::matchOrder(Order& order)
 {
 
    // std::cout << "Matching order for order id: " << order.clientOrderId<< std::endl;
-   
-
-
     if(m_availableOrders <= 0)
     {
-        std::cout << "returning here" << std::endl;
+        std::cout << "No Available Orders to be matched" << std::endl;
         return false;
 
     }
-    
+    std::vector<Order> matchedOrder;
     //retrieve the top order from the list first 
     OrderNode* tempNode = m_head;
     if(tempNode->order.quantity ==  order.quantity)
     {
+        matchedOrder.push_back(tempNode->order);
         m_head = tempNode->next;
+        
         delete tempNode;
         m_availableOrders = m_availableOrders - 1;
         
@@ -142,7 +142,6 @@ bool PricePoint::matchOrder(Order& order)
                 m_availableOrders = m_availableOrders - 1;
                 curr = m_head;
             }
-            //order.quantity = order.quantity - curr->order.quantity;
             std::cout <<"order quantity left " << order.quantity<< std::endl;
         }
         std::cout <<"\nfinal quantity left " << order.quantity << std::endl;

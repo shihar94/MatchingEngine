@@ -50,6 +50,7 @@ void OrderBook::addBuyOrder(Order order)
 void OrderBook::cancelOrder(Order order)
 {
     //remove the order from the orderbook
+    //handle cancel orders
 }   
 
 void OrderBook::handleOrder(Order& order)
@@ -101,7 +102,6 @@ void OrderBook::printOrderBook()
     std::cout << " Breaking at here\n";
     for(it = m_priceBuyOrderMap.begin(); it != m_priceBuyOrderMap.end(); it++)
     {
-        std::cout << "Price: " << it->first << std::endl;
         it->second.printOrders();
     }
     std::cout << " Breaking at here sell\n";
@@ -109,7 +109,6 @@ void OrderBook::printOrderBook()
     std::cout <<"OrderID     " << "Price    " << "  Quantity   " << " Type " << std::endl;
     for(it = m_priceSellOrderMap.begin(); it != m_priceSellOrderMap.end(); it++)
     {
-        //std::cout << "Price: " << it->first << std::endl;
         it->second.printOrders();
     }
 }   

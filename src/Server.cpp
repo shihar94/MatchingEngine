@@ -11,9 +11,7 @@ Server::Server(int port)
         std::cerr << "Can't create a socket! Quiting..."<< std::endl;
         exit(1);
     }
-    //initialize OrderBook to handle Orders
-   // m_orderBook = new OrderBook();
-
+    
 }
 
 Server::~Server()
@@ -38,26 +36,22 @@ void Server::start()
 
     std::thread* t = clientThread(&Server::loop,this, m_clientSocket);
     t->detach();
-   // close(m_serverSocket);
-
-
 }
 
 
 void Server::loop(int clientSocket)
 {  
 
-    //std::cout << "Current m_clientSocket " << clientSocket << std::endl;
     if (clientSocket == -1)
     {
         std::cerr << "Error listening a client socket! Quiting..."<< std::endl;
         exit(1);    
     }
+    // Client's remote name and service port
+    char host[NI_MAXHOST]; 
+    char service[NI_MAXHOST]; 
 
-    char host[NI_MAXHOST]; // Client's remote name
-    char service[NI_MAXHOST]; // Service (i.e. port) the client is connected on.
-
-    memset(host, 0, NI_MAXHOST); // ZeroMemory(host, NI_MAXHOST);
+    memset(host, 0, NI_MAXHOST); 
     memset(service, 0, NI_MAXHOST);
 
     if(getnameinfo(reinterpret_cast<sockaddr*>(&m_client),sizeof(m_client),host, NI_MAXHOST, service, NI_MAXSERV, 0)== 0){
@@ -69,28 +63,9 @@ void Server::loop(int clientSocket)
         std::cout << host << " connected on port " << ntohs(m_client.sin_port) << std::endl; 
     }
 
-    char buf[4096];
+    
     while(true)
     {
-
-    
-    
-        /*
-        memset(buf, 0, 4096);
-        int bytesReceived = recv(m_clientSocket, buf, 4096, 0);
-        if (bytesReceived == -1)
-        {
-            std::cerr << "Error in recv(). Quiting..." << std::endl;
-            break;
-        }
-        if (bytesReceived == 0){ // if zero bytes received
-            std::cout << "Client disconnected..." << std::endl;
-            break;
-        }
-        std::cout << std::string(buf, 0, bytesReceived) << std::endl;    */     
-        //Echo message back to client
-        //send(m_clientSocket, buf, bytesReceived + 1, 0);
-        memset(buf, 0, 4096);
         Order oNew;
         oNew.order_id = 0;
         oNew.price = 0;

@@ -69,3 +69,12 @@ struct Order
 
 ## Testing 
 Using google test to develop scenarios to test the orderbook.
+
+
+
+## Learning Outcomes
+
+This can be implemented via two ways as per my understanding to handle multiple clients. 
+
+1. Using multi threading. Each thread will handle a particular client and take care of operations accordingly. This is easy to implement but with resource constraints, scalability this is not viable solution. 
+2. Use of polling and select. In this identify the socket which has sent a data and act accordingly. A single thread will manage the orderbook operations and this will prevent deadlock and data race as only thread has access to the orderbook resource. Scalable but harder to implement. This will be considered for future development. 
