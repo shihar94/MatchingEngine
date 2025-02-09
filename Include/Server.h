@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include <iostream>
 
+#include "OrderBook.h"
+#include "PricePoint.h"
 class Server
 {
     public:
@@ -25,7 +27,7 @@ class Server
         sockaddr_in m_hint;
         sockaddr_in m_client;
         socklen_t m_clientSize = sizeof(m_client);
-
+        OrderBook* m_orderBook;
     
 
 

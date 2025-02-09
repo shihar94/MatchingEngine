@@ -11,6 +11,10 @@ Server::Server(int port)
         std::cerr << "Can't create a socket! Quiting..."<< std::endl;
         exit(1);
     }
+
+    //initialize OrderBook to handle Orders
+    m_orderBook = new OrderBook();
+
 }
 
 Server::~Server()
@@ -76,6 +80,24 @@ void Server::loop()
         std::cout << std::string(buf, 0, bytesReceived) << std::endl;         
         //Echo message back to client
         send(m_clientSocket, buf, bytesReceived + 1, 0);
+
+
+        memset(buf, 0, 4096);
+        Order oNew;
+        oNew.order_id = 0;
+        oNew.price = 0;
+        oNew.quantity = 0;
+        oNew.type = (ORDER_TYPE)1;
+        int n = read(m_clientSocket, &oNew, sizeof(Order));
+
+        if(n == sizeof(Order) && oNew.type <=2)
+        {
+            std::cout << oNew.order_id << " " << oNew.price << " "<< oNew.quantity << " " << oNew.type<< std::endl;
+            
+        }
+
+        m_orderBook->handleOrder(oNew);
+        m_orderBook->printOrderBook();
     }
     
 }

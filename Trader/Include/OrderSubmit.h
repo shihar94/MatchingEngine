@@ -3,6 +3,7 @@
 
 enum ORDER_TYPE
 {
+    RESET= -1,
     BUY  = 1 ,
     SELL = 2 
 };
@@ -23,6 +24,17 @@ class OrderSubmit
         ~OrderSubmit();
 
         Order requestOrder();
+
+    private:
+        void orderReset();
+        void generateNewOrder();
+        
+
+    private:
+        Order m_order;
+        int m_orderId = 0;
+    
+
 
 
 };

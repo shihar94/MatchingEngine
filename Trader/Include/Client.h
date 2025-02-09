@@ -9,6 +9,9 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <sstream>
+#include <string>
+
+#include "OrderGenerator.h"
 
 class Client
 {
@@ -16,12 +19,12 @@ class Client
 
 
     public:
-        Client(int port);
+        Client(int port , std::string& clientID);
         ~Client();
         void start();
         void init();
         void loop();
-        void close();
+        void stop();
 
     
 
@@ -30,6 +33,10 @@ class Client
         int m_clientSocket;
         sockaddr_in m_serverAddress;
         FILE* m_client;
+
+    private:
+        OrderGenerator* orderGenerator;
+        std::string m_clientID = "";
 };
 
 #endif

@@ -13,20 +13,16 @@ int main(int argc , char* argv[])
 {
 
     printPID();
-
-    OrderSubmit orderSubmit;
-    Order order = orderSubmit.requestOrder();
-   
-    if(argc < 2)
+    if(argc < 3)
     {   
-        std::cout << "./Trader portNo" << std::endl;
+        std::cout << "./Trader portNo clienID" << std::endl;
         return 1;
     }
     printPID();
     int port = std::stoi((argv[1]));
-   
+    std::string clientId = argv[2];
     
-    Client client(port);
+    Client client(port ,clientId);
     client.init();
     client.start();
     client.loop();
