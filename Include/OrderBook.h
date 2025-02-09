@@ -7,13 +7,13 @@
 //for each price point it will maintain a linkedlist of orders which 
 //price point lists 
 
-using priceVal = int;
+using priceVal = double;
 
 class OrderBook
 {
 
     public:
-        OrderBook();
+        OrderBook(std::string symbol);
         ~OrderBook();
 
 

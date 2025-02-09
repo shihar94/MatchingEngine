@@ -29,8 +29,6 @@ int  main(int argc , char* argv[]){
     printPID();
     int p = std::stoi((argv[1]));   
 
-    std::thread t;
-    OrderBook orderBook;
     Server server(p);
     server.init();
     server.run();

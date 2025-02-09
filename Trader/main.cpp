@@ -18,7 +18,8 @@ int main(int argc , char* argv[])
         std::cout << "./Trader portNo clienID" << std::endl;
         return 1;
     }
-    printPID();
+    
+    
     int port = std::stoi((argv[1]));
     std::string clientId = argv[2];
     

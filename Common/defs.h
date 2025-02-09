@@ -14,9 +14,9 @@ struct Order
 {
     char clientOrderId[11];
     char symbol[4];
-    double val;
+    double price;
     int order_id;
-    int price;
+    int prize;
     int quantity;
     ORDER_TYPE type;
 };

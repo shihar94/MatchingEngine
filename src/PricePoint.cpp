@@ -69,9 +69,12 @@ void PricePoint::printOrders()
         
         
         std::cout << "      "<<tempNode -> order.order_id <<" ";
-        std::cout << "    "<<(double)tempNode -> order.price << " ";
-        std::cout << "          "<< tempNode -> order.quantity << " ";
-        std::cout << "       "<<tempNode -> order.type << " ";
+        std::cout << "      "<<  tempNode -> order.price << " ";
+        std::cout << "      "<< tempNode -> order.quantity << " ";
+        std::cout << "      "<<tempNode -> order.type << " ";
+        std::cout << "      "<<tempNode -> order.symbol << " ";
+        std::cout << "      "<<tempNode -> order.clientOrderId << " ";
+        std::cout << "      "<<tempNode -> order.prize<< " ";
         std::cout << "" << std::endl;
         tempNode = tempNode -> next;
 

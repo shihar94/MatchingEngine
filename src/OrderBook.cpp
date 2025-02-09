@@ -1,10 +1,10 @@
 #include "OrderBook.h"
 #include <iostream>
 
-OrderBook::OrderBook()
+OrderBook::OrderBook(std::string symbol)
 {
     //initialize the orderbook
-    std::cout << "OrderBook constructor called" << std::endl;
+    std::cout << "OrderBook constructor called for instrument: " << symbol << std::endl;
 }
 
 
@@ -98,12 +98,13 @@ void OrderBook::printOrderBook()
     std::map<priceVal , PricePoint>::iterator it;
     std::cout << "\nBUY" << std::endl;
     std::cout <<"OrderID     " << "Price    " << "  Quantity   " << " Type " << std::endl;
+    std::cout << " Breaking at here\n";
     for(it = m_priceBuyOrderMap.begin(); it != m_priceBuyOrderMap.end(); it++)
     {
-        //std::cout << "Price: " << it->first << std::endl;
+        std::cout << "Price: " << it->first << std::endl;
         it->second.printOrders();
     }
-
+    std::cout << " Breaking at here sell\n";
     std::cout << "SELL" << std::endl;
     std::cout <<"OrderID     " << "Price    " << "  Quantity   " << " Type " << std::endl;
     for(it = m_priceSellOrderMap.begin(); it != m_priceSellOrderMap.end(); it++)

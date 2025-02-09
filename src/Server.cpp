@@ -13,7 +13,7 @@ Server::Server(int port)
     }
 
     //initialize OrderBook to handle Orders
-    m_orderBook = new OrderBook();
+   // m_orderBook = new OrderBook();
 
 }
 
@@ -38,8 +38,7 @@ void Server::start()
     m_clientSocket = accept(m_serverSocket,reinterpret_cast<sockaddr*>(&m_client), &m_clientSize);
 
     std::thread* t = clientThread(&Server::loop,this, m_clientSocket);
-    
-    // close listening socket
+    t->detach();
    // close(m_serverSocket);
 
 
@@ -49,7 +48,7 @@ void Server::start()
 void Server::loop(int clientSocket)
 {  
 
-    std::cout << "Current m_clientSocket " << clientSocket << std::endl;
+    //std::cout << "Current m_clientSocket " << clientSocket << std::endl;
     if (clientSocket == -1)
     {
         std::cerr << "Error listening a client socket! Quiting..."<< std::endl;
@@ -102,12 +101,18 @@ void Server::loop(int clientSocket)
 
         if(n == sizeof(Order) && oNew.type <=2)
         {
-            std::cout<< oNew.val<<" "<<oNew.clientOrderId <<" "<<oNew.symbol <<" " << oNew.order_id << " " << oNew.price << " "<< oNew.quantity << " " << oNew.type<< std::endl;
+            std::cout<<oNew.clientOrderId <<" "<<oNew.symbol <<" " << oNew.order_id << " " << oNew.price << " "<< oNew.quantity << " " << oNew.type<< std::endl;
             //exit(1)
         }
         std::lock_guard<std::mutex> lock(om);
-        //m_orderBook->handleOrder(oNew);
-       // m_orderBook->printOrderBook();
+        if(m_orderBookS.find(std::string(oNew.symbol)) == m_orderBookS.end())
+        {
+            m_orderBookS[std::string(oNew.symbol)]=new OrderBook(std::string(oNew.symbol));
+            std::cout<<"Hello\n";
+        }
+        m_orderBookS[std::string(oNew.symbol)]->handleOrder(oNew);
+        std::cout<<"Hello\n";
+        m_orderBookS[std::string(oNew.symbol)]->printOrderBook();
     }
         
     
