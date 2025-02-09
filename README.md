@@ -68,4 +68,4 @@ struct Order
 ```
 
 ## Testing 
-Currently in progress.
+Using google test to develop scenarios to test the orderbook.
