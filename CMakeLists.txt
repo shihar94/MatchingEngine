@@ -3,6 +3,7 @@ project(Matching_Engine VERSION 0.1.0 LANGUAGES C CXX)
 
 include_directories(
         ${PROJECT_SOURCE_DIR}/Include
+        ${PROJECT_SOURCE_DIR}/Common
         ${PROJECT_SOURCE_DIR}/src
 )
 
@@ -19,10 +20,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED off)
 set(CMAKE_CXX_EXTENSIONS off)
 
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-
-
-set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+
+
 add_executable(Matching_Engine main.cpp ${all_SRCS})
+target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)

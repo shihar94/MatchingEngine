@@ -26,7 +26,7 @@ void OrderGenerator::start()
 
 
 
-Order OrderGenerator::getOrder()
+Order OrderGenerator::getOrder(std::string& clientID)
 {
-    return m_orderSubmitter->requestOrder();
+    return m_orderSubmitter->requestOrder(clientID);
 }

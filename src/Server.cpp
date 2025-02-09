@@ -1,6 +1,6 @@
 #include "Server.h"
 
-
+std::mutex om;
 Server::Server(int port)
 {
     m_port = port;
@@ -33,8 +33,24 @@ void Server::init()
 
 void Server::start()
 {
+    
+    
     m_clientSocket = accept(m_serverSocket,reinterpret_cast<sockaddr*>(&m_client), &m_clientSize);
-    if (m_clientSocket == -1)
+
+    std::thread* t = clientThread(&Server::loop,this, m_clientSocket);
+    
+    // close listening socket
+   // close(m_serverSocket);
+
+
+}
+
+
+void Server::loop(int clientSocket)
+{  
+
+    std::cout << "Current m_clientSocket " << clientSocket << std::endl;
+    if (clientSocket == -1)
     {
         std::cerr << "Error listening a client socket! Quiting..."<< std::endl;
         exit(1);    
@@ -48,23 +64,19 @@ void Server::start()
 
     if(getnameinfo(reinterpret_cast<sockaddr*>(&m_client),sizeof(m_client),host, NI_MAXHOST, service, NI_MAXSERV, 0)== 0){
         std::cout << host << " connected on port " << service << std::endl;
-    } else {
+    } 
+    else 
+    {
         inet_ntop(AF_INET, &m_client.sin_addr, host, NI_MAXHOST);
         std::cout << host << " connected on port " << ntohs(m_client.sin_port) << std::endl; 
     }
-    
-    // close listening socket
-    close(m_serverSocket);
 
-
-}
-
-
-void Server::loop()
-{  
     char buf[4096];
     while(true)
     {
+
+    
+    
         /*
         memset(buf, 0, 4096);
         int bytesReceived = recv(m_clientSocket, buf, 4096, 0);
@@ -80,8 +92,6 @@ void Server::loop()
         std::cout << std::string(buf, 0, bytesReceived) << std::endl;    */     
         //Echo message back to client
         //send(m_clientSocket, buf, bytesReceived + 1, 0);
-
-
         memset(buf, 0, 4096);
         Order oNew;
         oNew.order_id = 0;
@@ -92,12 +102,24 @@ void Server::loop()
 
         if(n == sizeof(Order) && oNew.type <=2)
         {
-            std::cout << oNew.order_id << " " << oNew.price << " "<< oNew.quantity << " " << oNew.type<< std::endl;
-            
+            std::cout<<oNew.clientOrderId <<" "<<oNew.symbol <<" " << oNew.order_id << " " << oNew.price << " "<< oNew.quantity << " " << oNew.type<< std::endl;
+            //exit(1)
         }
-
-        m_orderBook->handleOrder(oNew);
-        m_orderBook->printOrderBook();
+        std::lock_guard<std::mutex> lock(om);
+        //m_orderBook->handleOrder(oNew);
+       // m_orderBook->printOrderBook();
     }
+        
     
+    
+}
+
+
+void Server::run()
+{
+    while(true)
+    {
+        start();
+        //loop();
+    }
 }

@@ -4,19 +4,8 @@
 #ifndef PRICEPOINT_H    
 #define PRICEPOINT_H
 
-enum ORDER_TYPE
-{
-    BUY  = 1 ,
-    SELL = 2 
-};
+#include "defs.h"
 
-struct Order
-{
-    int order_id;
-    int price;
-    int quantity;
-    ORDER_TYPE type;
-};
 
 //this is a node which is similar to a linkedlist node
 struct OrderNode{
@@ -39,7 +28,6 @@ class PricePoint
         void removeOrder(Order order);
         void printOrders();
         bool matchOrder(Order& order);
-        Order returnOrder();
         int getAvailableOrders();
 
 };

@@ -5,6 +5,7 @@ project(Trader VERSION 0.1.0 LANGUAGES C CXX)
 include_directories(
         ${PROJECT_SOURCE_DIR}/Include
         ${PROJECT_SOURCE_DIR}/src
+        ../Common
 )
 
 add_compile_options("-ggdb;-O3;-Wall")

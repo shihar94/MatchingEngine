@@ -1,21 +1,7 @@
 #ifndef ORDERSUBMIT_H
 #define ORDERSUBMIT_H
 
-enum ORDER_TYPE
-{
-    RESET= -1,
-    BUY  = 1 ,
-    SELL = 2 
-};
-
-struct Order
-{
-    int order_id;
-    int price;
-    int quantity;
-    ORDER_TYPE type;
-};
-
+#include "defs.h"
 
 class OrderSubmit
 {
@@ -23,16 +9,17 @@ class OrderSubmit
         OrderSubmit();
         ~OrderSubmit();
 
-        Order requestOrder();
+        Order requestOrder(std::string& clientID);
 
     private:
         void orderReset();
-        void generateNewOrder();
+        void generateNewOrder(std::string& clientID);
         
 
     private:
         Order m_order;
         int m_orderId = 0;
+         
     
 
 

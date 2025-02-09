@@ -78,10 +78,6 @@ void PricePoint::printOrders()
     }   
 }
 
-Order PricePoint::returnOrder()
-{
-    
-}
 
 bool PricePoint::matchOrder(Order& order)
 {
@@ -158,5 +154,5 @@ bool PricePoint::matchOrder(Order& order)
 
 int PricePoint::getAvailableOrders()
 {
-
+    return m_availableOrders;
 }

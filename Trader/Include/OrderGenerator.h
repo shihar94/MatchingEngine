@@ -12,7 +12,7 @@ class OrderGenerator
 
         void init();
         void start();
-        Order getOrder();
+        Order getOrder(std::string& clientID);
         static int getNoOfClients()
         {
             return NO_OF_CLIENTS;

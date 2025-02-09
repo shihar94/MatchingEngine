@@ -10,6 +10,14 @@
 
 #include "OrderBook.h"
 #include "PricePoint.h"
+#include <thread> 
+#include <mutex>
+
+
+
+
+
+
 class Server
 {
     public:
@@ -17,7 +25,8 @@ class Server
         ~Server();
         void init();
         void start();
-        void loop();
+        void loop(int clientSocket);
+        void run();
 
 
 

@@ -27,13 +27,14 @@ int  main(int argc , char* argv[]){
         return 1;
     }
     printPID();
-    int p = std::stoi((argv[1]));
+    int p = std::stoi((argv[1]));   
 
+    std::thread t;
+    OrderBook orderBook;
     Server server(p);
     server.init();
-    server.start();
-    server.loop();
-    OrderBook orderBook;
+    server.run();
+    
 
 
     

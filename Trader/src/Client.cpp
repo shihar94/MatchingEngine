@@ -40,7 +40,7 @@ void Client::loop()
     {
         //request the command details from client 
 
-        order = orderGenerator->getOrder();
+        order = orderGenerator->getOrder(m_clientID);
         
         if(fwrite(&order, 1, sizeof(order), m_client) != sizeof(order))
 	    {
