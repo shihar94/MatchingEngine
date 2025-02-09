@@ -20,4 +20,14 @@ $ cmake ..
 $ make Trader 
 $./Trader portNo clientId
 ```
+## Order Structure Submitted through TCP Connection
+```c++
 
+struct Order
+{
+    int order_id;
+    int price;
+    int quantity;
+    ORDER_TYPE type;
+};
+```
