@@ -35,15 +35,15 @@ void OrderSubmit::generateNewOrder()
    // m_order.order_id = m_orderId;
     m_order.price = 78;
     m_order.quantity = 100;
-    if(m_order.order_id %3 == 0)
+    if(m_order.order_id %2 == 0)
     {   
-        m_order.type = ORDER_TYPE::BUY;
+       m_order.type = ORDER_TYPE::BUY;
     }
     else
     {
         m_order.type = ORDER_TYPE::SELL;
     }
     
-    m_orderId += 1;
+    
     std::cout << m_orderId <<std::endl;
 }

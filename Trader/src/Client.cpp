@@ -34,12 +34,13 @@ void Client::init()
 void Client::loop()
 {   
     const char* message = "Hello, server!";
-    send(m_clientSocket, message, strlen(message), 0);
+    //send(m_clientSocket, message, strlen(message), 0);
+    Order order;
     while(true)
     {
         //request the command details from client 
 
-        Order order = orderGenerator->getOrder();
+        order = orderGenerator->getOrder();
         
         if(fwrite(&order, 1, sizeof(order), m_client) != sizeof(order))
 	    {

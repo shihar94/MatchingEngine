@@ -65,7 +65,7 @@ void Server::loop()
     char buf[4096];
     while(true)
     {
-        
+        /*
         memset(buf, 0, 4096);
         int bytesReceived = recv(m_clientSocket, buf, 4096, 0);
         if (bytesReceived == -1)
@@ -77,9 +77,9 @@ void Server::loop()
             std::cout << "Client disconnected..." << std::endl;
             break;
         }
-        std::cout << std::string(buf, 0, bytesReceived) << std::endl;         
+        std::cout << std::string(buf, 0, bytesReceived) << std::endl;    */     
         //Echo message back to client
-        send(m_clientSocket, buf, bytesReceived + 1, 0);
+        //send(m_clientSocket, buf, bytesReceived + 1, 0);
 
 
         memset(buf, 0, 4096);
