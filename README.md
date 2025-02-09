@@ -32,6 +32,7 @@
     ├── PricePoint.cpp
     └── Server.cpp
 ```
+![Matching_Engine](https://github.com/user-attachments/assets/2110bc30-7dea-488a-916d-0cc4d80b2cb5)
 
 Matching Engine consists of a server which responds to client tcp connections and has orderbooks for each symbol maintained using a hash map for each symbol. Each of those individual order books will have a two order nodes corresponding to buy and sell side for that instrument.
 
