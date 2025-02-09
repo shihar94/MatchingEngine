@@ -33,6 +33,8 @@
     └── Server.cpp
 ```
 
+Matching Engine consists of a server which responds to client tcp connections and has orderbooks for each symbol maintained using a hash map for each symbol. Each of those individual order books will have a two order nodes corresponding to buy and sell side for that instrument.
+
 ## Building Server and Running it.
 ```bash
 $ mkdir build && cd build
@@ -40,7 +42,7 @@ $ cmake ..
 $ make Matching_Engine 
 $./Matching_Engine portNo
 ```
-The server is able to handle single client and currently its focussed on improving to handle multiple clients.
+The server is able to handle multiple clients.
 
 ## Building the client and Running it.
 ```bash
