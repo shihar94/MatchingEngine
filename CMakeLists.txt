@@ -39,6 +39,7 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 add_executable(Matching_Engine main.cpp ${all_SRCS})
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 
+add_executable(testingScript testingScript.cpp ${all_SRCS})
 
 enable_testing()
 

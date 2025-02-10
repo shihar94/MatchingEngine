@@ -60,8 +60,11 @@ The order structure is as follows where the order id , price , quantity and orde
 ```c++
 struct Order
 {
+    char clientOrderId[11];
+    char symbol[5];
+    double price;
     int order_id;
-    int price;
+    int prize;
     int quantity;
     ORDER_TYPE type;
 };
