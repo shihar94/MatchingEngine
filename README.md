@@ -2,6 +2,7 @@
 
 - A Simple Matching Engine which accepts BUY and SELL orders and matches. Currently only supports exact price and partial fills.
 -Partial fills means that an order can be matched with multiple orders, and the quantity of shares bought or sold can be less than the quantity of shares specified in the original order
+-- Trade Reports will be sent to the matched trades and new trades as well. Currently its designed to send these reports for primary orders where it is the order which starts to match.
 -- Currently built on macOS M1. Developed to be handled in linux environments but not tested yet.
 
 ---
