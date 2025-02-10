@@ -25,6 +25,8 @@ class Client
         void init();
         void loop();
         void stop();
+        void read();
+        void readThread();
 
     
 
@@ -37,6 +39,9 @@ class Client
     private:
         OrderGenerator* orderGenerator;
         std::string m_clientID = "";
+        bool m_read = false;
+        std::atomic_int m_indexToRead= 0;
+        std::string m_clientOrderIDCurr ="";
 };
 
 #endif

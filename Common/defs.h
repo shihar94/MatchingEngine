@@ -20,7 +20,7 @@ enum TRADE_MATCHES
 struct Order
 {
     char clientOrderId[11];
-    char symbol[4];
+    char symbol[5];
     double price;
     int order_id;
     int prize;
@@ -30,7 +30,7 @@ struct Order
 
 struct TradeReport
 {
-    char symbol[4];
+    char symbol[5];
     char matchedClientOrderId[11];
     char clientOrderId[11];
     double price;

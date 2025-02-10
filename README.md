@@ -68,9 +68,19 @@ struct Order
 ```
 
 ## Testing 
-Using google test to develop scenarios to test the orderbook.
+Using google test to develop scenarios to test the orderbook. The scenarios tested in GTEST hello_test.cpp are as follows.
+1. Test With OrderBook with Zero Order - Expected to receive trade report with TRADE_MATCHES::NEW type
+2. Test with orderbook with single order with exact quantity expected to receive report with TRADE_MATCHES::FILL type.
+3. Test with multiple orders to identify working of partial fills. Expected reports with TRADE_MATCHES::PFILL for matched orders and TRADE_MATCHES::NEW type if still quantity is left and after adding to orderbook. 
+-- Test Results 
+```bash 
+[       OK ] OrderBookTestMatchPartialFill.BasicAssertions (0 ms)
+[----------] 1 test from OrderBookTestMatchPartialFill (0 ms total)
 
-
+[----------] Global test environment tear-down
+[==========] 3 tests from 3 test suites ran. (0 ms total)
+[  PASSED  ] 3 tests.
+```
 
 ## Learning Outcomes
 

@@ -28,8 +28,9 @@ class PricePoint
         void printOrders();
         bool matchOrder(Order& order , std::vector<TradeReport>& matchedTrades);
         int getAvailableOrders();
-        TradeReport createTradeMatches(Order& m_order , Order& c_order);
+        TradeReport createPFILLTradeMatches(Order& m_order , Order& c_order);
         TradeReport newOrder(Order& primary_order);
+        TradeReport createFILLTradeMatches(Order& primary_order , Order& secondary_order);
 };
 
 #endif

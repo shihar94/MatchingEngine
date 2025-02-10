@@ -86,10 +86,12 @@ void Server::loop(int clientSocket)
         }
         std::vector<TradeReport> matchedTrades;
         m_orderBookS[std::string(oNew.symbol)]->handleOrder(oNew , matchedTrades);
+        uint32_t number_elements = matchedTrades.size();
+        send(m_clientSocket, &number_elements, sizeof(number_elements), 0);
         for(int i = 0 ; i < matchedTrades.size() ; i++)
         {
             int n = write(m_clientSocket,&matchedTrades[i],sizeof(TradeReport));
-            
+
         }
           
         std::cout<<"Hello\n";
