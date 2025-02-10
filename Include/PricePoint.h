@@ -17,7 +17,7 @@ class PricePoint
 {
     private:
         OrderNode* m_head = nullptr;
-        //OrderNode* m_tail;
+        //OrderNode* m_tail;  //have to implement this it will make easy adding orders at the end
         //double m_pricePoint;
         int m_availableOrders = 0;
     public:

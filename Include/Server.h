@@ -14,10 +14,6 @@
 #include <mutex>
 
 
-
-
-
-
 class Server
 {
     public:
@@ -37,7 +33,6 @@ class Server
         sockaddr_in m_client;
         socklen_t m_clientSize = sizeof(m_client);
         std::map<std::string , OrderBook*> m_orderBookS;
-        //OrderBook* m_orderBook;
         
     
 

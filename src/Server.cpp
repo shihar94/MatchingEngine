@@ -94,7 +94,6 @@ void Server::loop(int clientSocket)
 
         }
           
-        std::cout<<"Hello\n";
         m_orderBookS[std::string(oNew.symbol)]->printOrderBook();
     }
         
@@ -108,6 +107,5 @@ void Server::run()
     while(true)
     {
         start();
-        //loop();
     }
 }
