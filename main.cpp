@@ -10,10 +10,6 @@
 #include "OrderBook.h"
 #include <vector>
 
-/*
-ntohs -->> network to host short
-*/
-
 void printPID()
 {
     pid_t pid = getpid();

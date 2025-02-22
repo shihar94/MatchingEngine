@@ -4,14 +4,12 @@ std::mutex om;
 Server::Server(int port)
 {
     m_port = port;
-
     m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if(m_serverSocket == -1)
     {
         std::cerr << "Can't create a socket! Quiting..."<< std::endl;
         exit(1);
-    }
-    
+    }   
 }
 
 Server::~Server()
@@ -33,7 +31,6 @@ void Server::start()
     
     
     m_clientSocket = accept(m_serverSocket,reinterpret_cast<sockaddr*>(&m_client), &m_clientSize);
-
     std::thread* t = clientThread(&Server::loop,this, m_clientSocket);
     t->detach();
 }

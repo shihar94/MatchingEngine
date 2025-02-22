@@ -26,7 +26,6 @@ void PricePoint::addOrder(Order order , std::vector<TradeReport>& tradeReport)
 
 
     OrderNode* tempNode = new OrderNode();
-
     tempNode -> order = order;
     tempNode -> next = nullptr;
 
@@ -39,7 +38,6 @@ void PricePoint::addOrder(Order order , std::vector<TradeReport>& tradeReport)
     else
     {   
         OrderNode* curr = m_head;
-
         while(curr -> next != nullptr)
         {
             curr = curr -> next;
@@ -64,9 +62,7 @@ void PricePoint::printOrders()
 
     OrderNode* tempNode = m_head;
     while(tempNode != nullptr)
-    {
-        
-        
+    {   
         std::cout << "      "<<tempNode -> order.order_id <<" ";
         std::cout << "      "<<  tempNode -> order.price << " ";
         std::cout << "      "<< tempNode -> order.quantity << " ";
@@ -91,18 +87,13 @@ bool PricePoint::matchOrder(Order& order , std::vector<TradeReport>& matchedTrad
         return false;
 
     }
-
-    //std::vector<TradeReport> matchedTrades;
-    //retrieve the top order from the list first 
     OrderNode* tempNode = m_head;
     if(tempNode->order.quantity ==  order.quantity)
     {
-        
         matchedTrades.push_back(createFILLTradeMatches(order,tempNode->order));
         m_head = tempNode->next;
         delete tempNode;
         m_availableOrders = m_availableOrders - 1;
-        
         return true;
     }
     else if(tempNode->order.quantity > order.quantity)
@@ -132,24 +123,18 @@ bool PricePoint::matchOrder(Order& order , std::vector<TradeReport>& matchedTrad
             {
                 matchedTrades.push_back(createPFILLTradeMatches(order,curr->order));
                 curr->order.quantity = curr->order.quantity - order.quantity;
-                //std::cout << "curr->order.quantity = curr->order.quantity - order.quantity:  " << curr->order.quantity << std::endl;
                 order.quantity = 0 ;
 
             }else if(order.quantity - curr->order.quantity >0)
             {
                 matchedTrades.push_back(createPFILLTradeMatches(order,curr->order));
                 order.quantity = order.quantity - curr->order.quantity;
-                //std::cout << "3order.quantity = order.quantity - curr->order.quantity:  " << order.quantity  << std::endl;
                 m_head = curr->next;
                 delete curr;
                 m_availableOrders = m_availableOrders - 1;
                 curr = m_head;
             }
-            //std::cout <<"order quantity left " << order.quantity<< std::endl;
         }
-        std::cout <<"\nfinal quantity left " << order.quantity << std::endl;
-        std::cout <<"partial fill end" << std::endl;
-
         if(order.quantity == 0 )
         {
             return true;
@@ -166,10 +151,6 @@ int PricePoint::getAvailableOrders()
 
 TradeReport PricePoint::createPFILLTradeMatches(Order& primary_order , Order& secondary_order)
 {
-    //given two orders create the tradereport for the matched order and return 
-    //primary order is the main order which triggered the match 
-
-    //secondary order is the other corresponding order
     TradeReport tr; 
     strcpy(tr.symbol , primary_order.symbol);
     strcpy(tr.clientOrderId , primary_order.clientOrderId);
@@ -187,10 +168,6 @@ TradeReport PricePoint::createPFILLTradeMatches(Order& primary_order , Order& se
 
 TradeReport PricePoint::createFILLTradeMatches(Order& primary_order , Order& secondary_order)
 {
-    //given two orders create the tradereport for the matched order and return 
-    //primary order is the main order which triggered the match 
-
-    //secondary order is the other corresponding order
     TradeReport tr; 
     strcpy(tr.symbol , primary_order.symbol);
     strcpy(tr.clientOrderId , primary_order.clientOrderId);

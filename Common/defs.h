@@ -44,12 +44,9 @@ struct TradeReport
 
 
 template<typename T, typename... A>
-inline auto clientThread(T &&func, A &&... args) noexcept 
+std::thread* clientThread(T &&func, A &&... args) noexcept 
 {
-    auto t = new std::thread((std::forward<T>(func)),(std::forward<A>(args))...);
-    //using namespace std::literals::chrono_literals;
-    //std::this_thread::sleep_for(1s);
-
+    std::thread* t = new std::thread((std::forward<T>(func)),(std::forward<A>(args))...);
     return t;
 }
 
