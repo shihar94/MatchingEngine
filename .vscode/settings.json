@@ -116,5 +116,7 @@
                 }
             }
         ]
-    }
+    },
+    "testExplorer.codeLens": true,
+    "testMate.cpp.test.executables": "hello_test"
 }

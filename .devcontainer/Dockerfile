@@ -14,3 +14,5 @@ WORKDIR build
 RUN cmake ..
 RUN make
 RUN make install
+
+
