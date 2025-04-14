@@ -9,6 +9,7 @@
 #include "Server.h"
 #include "OrderBook.h"
 #include <vector>
+#include <ThreadQueue.h>
 
 void printPID()
 {
