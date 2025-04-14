@@ -14,8 +14,10 @@ add_compile_options("-ggdb;-O3;-Wall")
 
 file(GLOB all_SRCS
         "${PROJECT_SOURCE_DIR}/Include/*.h"
+        "${PROJECT_SOURCE_DIR}/Include/kafka/*.h"
         "${PROJECT_SOURCE_DIR}/Include/*.hpp"
         "${PROJECT_SOURCE_DIR}/src/*.cpp"
+        "${PROJECT_SOURCE_DIR}/src/kafka/*.cpp"
         "${PROJECT_SOURCE_DIR}/src/*.c"
         "${PROJECT_SOURCE_DIR}/test/*.cpp"
         )

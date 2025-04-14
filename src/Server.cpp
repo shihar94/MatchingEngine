@@ -1,6 +1,7 @@
 #include "Server.h"
 #include <vector>
 #include <string.h>
+#include <kafkaPublisher.h>
 std::mutex om;
 Server::Server(int port)
 {
@@ -10,7 +11,9 @@ Server::Server(int port)
     {
         std::cerr << "Can't create a socket! Quiting..."<< std::endl;
         exit(1);
-    }   
+    } 
+    
+    kafkaPublisher kafka;
 }
 
 Server::~Server()
