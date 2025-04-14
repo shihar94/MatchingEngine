@@ -29,8 +29,21 @@ find_package(Threads REQUIRED)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(rdkafka REQUIRED IMPORTED_TARGET rdkafka)
+
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(rdkafka++ REQUIRED IMPORTED_TARGET rdkafka++)
+
+find_package(Threads REQUIRED)
 
 add_executable(Matching_Engine main.cpp ${all_SRCS})
+
+target_link_libraries(${PROJECT_NAME} PUBLIC PkgConfig::rdkafka)
+target_link_libraries(${PROJECT_NAME}  PUBLIC PkgConfig::rdkafka++)
+
+
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 
 add_executable(testingScript testingScript.cpp ${all_SRCS})
