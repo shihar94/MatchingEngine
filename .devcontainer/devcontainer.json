@@ -1,16 +1,22 @@
 {
     "name": "C++",
-    "image": "mcr.microsoft.com/devcontainers/cpp:1-debian-12",
+	  "build": {
+		"dockerfile": "Dockerfile"
+	  },
+    "containerEnv": { "MY_VARIABLE": "${localEnv:MY_VARIABLE}" },
     "customizations": {
-    "vscode": {
-      "extensions": [
+      "vscode": {
+        "extensions": [
                     "streetsidesoftware.code-spell-checker",
                     "ms-vscode.cpptools-extension-pack",
                     "matepek.vscode-catch2-test-adapter",
                     "twxs.cmake",
                     "ms-vscode.cmake-tools",
-                    "austin.code-gnu-global"
+                    "austin.code-gnu-global",
+                    "ms-azuretools.vscode-docker"
                     ]
     }
   }
+  // Use 'postCreateCommand' to run commands after the container is created.
+	
 }
