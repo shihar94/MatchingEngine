@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "defs.h"
+#include <string.h>
 PricePoint::PricePoint()
 {
     //std::cout << "PricePoint constructor called for price: " << std::endl;

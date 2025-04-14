@@ -5,6 +5,7 @@
 #define PRICEPOINT_H
 
 #include "defs.h"
+#include<vector>
 
 
 //this is a node which is similar to a linkedlist node
@@ -23,7 +24,7 @@ class PricePoint
     public:
         PricePoint();
         ~PricePoint();
-        void addOrder(Order order,std::vector<TradeReport>& tradeReport);
+        void addOrder(Order order,std::vector <TradeReport>& tradeReport);
         void removeOrder(Order order);
         void printOrders();
         bool matchOrder(Order& order , std::vector<TradeReport>& matchedTrades);
