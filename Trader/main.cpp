@@ -13,6 +13,8 @@ int main(int argc , char* argv[])
 {
 
     printPID();
+
+    
     if(argc < 3)
     {   
         std::cout << "./Trader portNo clienID" << std::endl;

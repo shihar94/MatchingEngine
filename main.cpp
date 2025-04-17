@@ -10,6 +10,7 @@
 #include "OrderBook.h"
 #include <vector>
 #include <ThreadQueue.h>
+#include <kafka/kafkaPublisher.h>
 
 void printPID()
 {
@@ -19,7 +20,7 @@ void printPID()
 
 int  main(int argc , char* argv[]){
 
-
+    /*
     if(argc < 2)
     {   
         std::cout << "./Matching_Engine portNo" << std::endl;
@@ -32,8 +33,10 @@ int  main(int argc , char* argv[]){
     Server server(p);
     server.init();
     server.run();
-    
+    */
 
+    std::string topicName = "orders";
+    kafkaPublisher k;
 
     
     return 0;

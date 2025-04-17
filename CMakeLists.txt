@@ -1,6 +1,33 @@
 cmake_minimum_required(VERSION 3.5.0)
 project(Matching_Engine VERSION 0.1.0 LANGUAGES C CXX)
 
+set(LINK_LIBRARIES
+    rdmacm
+    ibverbs
+    xml2
+    boost_date_time
+    boost_filesystem
+    boost_system
+    boost_serialization
+    boost_thread
+    boost_chrono
+    rdkafka
+    rdkafka++
+    clntsh
+    nnz19
+    lzf
+    z
+    ssl
+    crypto
+    nsl
+    rt
+    dl
+    z
+    crypt
+    numa
+    )
+
+
 include_directories(
         ${PROJECT_SOURCE_DIR}/Include
         ${PROJECT_SOURCE_DIR}/Common
@@ -31,6 +58,12 @@ find_package(Threads REQUIRED)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
+
+add_subdirectory(src/kafka)
+list(APPEND EXTRA_LIB_DIRS "kafka")
+list(APPEND EXTRA_INCLUDE_DIRS "kafka")
+list(APPEND EXTRA_LINKS kafkaPublisher)
+
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(rdkafka REQUIRED IMPORTED_TARGET rdkafka)
 
@@ -38,17 +71,22 @@ pkg_check_modules(rdkafka REQUIRED IMPORTED_TARGET rdkafka)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(rdkafka++ REQUIRED IMPORTED_TARGET rdkafka++)
 
+
+
 find_package(Threads REQUIRED)
 
-add_executable(Matching_Engine main.cpp ${all_SRCS})
+link_libraries(rdkafka++)
+link_libraries(rdkafka)
+link_libraries(pthread)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC PkgConfig::rdkafka)
-target_link_libraries(${PROJECT_NAME}  PUBLIC PkgConfig::rdkafka++)
+add_executable(${PROJECT_NAME} main.cpp ${all_SRCS})
 
+target_link_libraries(${PROJECT_NAME} pthread librdkafka++.a librdkafka.a crypto ssl)
+#target_link_libraries(${PROJECT_NAME}   PUBLIC PkgConfig::rdkafka)
+#target_link_libraries(${PROJECT_NAME}   PUBLIC PkgConfig::rdkafka++)
+#target_link_libraries(${PROJECT_NAME}   PRIVATE Threads::Threads)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
-
-add_executable(testingScript testingScript.cpp ${all_SRCS})
+#add_executable(testingScript testingScript.cpp ${all_SRCS})
 
 enable_testing()
 

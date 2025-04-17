@@ -1,84 +1,87 @@
 #include "kafkaPublisher.h"
 #include <iostream>
+#include "common.h"
+
+#define ARR_SIZE(arr) ( sizeof((arr)) / sizeof((arr[0])) )
+static void dr_msg_cb (rd_kafka_t *kafka_handle,
+  const rd_kafka_message_t *rkmessage,
+  void *opaque) {
+if (rkmessage->err) {
+std::cout<<"error" <<std::endl;
+}
+}
+
 kafkaPublisher::kafkaPublisher()
 {
     std::cout <<1 << std::endl;
-}
-kafkaPublisher::kafkaPublisher(const std::string &topicName, int32_t topicPartition, std::string& directory, RdKafka::Conf *globalCfg)
-{
-    
-    m_topicName = topicName;
-    m_topicPartition = topicPartition;
-    m_directory= directory;
-    m_globalCfg = *globalCfg;
-    
-    m_fileName = m_directory + "/"+ m_topicName + "_" + std::to_string(m_topicPartition) +".dat";
-    //m_loggingInst = Log::getLogInstance();
-    
-    try
+    conf = rd_kafka_conf_new();
+
+    // User-specific properties that you must set
+    set_config(conf, "bootstrap.servers", "localhost:9092");
+
+    // Fixed properties
+    set_config(conf, "acks", "all");
+
+    // Install a delivery-error callback.
+    rd_kafka_conf_set_dr_msg_cb(conf, dr_msg_cb);
+
+    // Create the Producer instance.
+    producer = rd_kafka_new(RD_KAFKA_PRODUCER, conf, errstr, sizeof(errstr));
+    if (!producer)
     {
-      //m_msgMap = fileReader::getMessages(m_fileName);
+        std::cout<<"error" <<std::endl;
+        return;
     }
-    catch(const std::exception& e)
-    {
-      //EPrintf("Producer Initialization Failed %s\n" ,e.what());
-    }
-    
-    //m_loggingInst->writeLog("Initialised Topic: %s Partition No:%d FileName: %s With Message Count of: %d\n",m_topicName.c_str(),m_topicPartition,m_fileName.c_str(),m_msgMap.size());
-  
 }
+
 
 kafkaPublisher::~kafkaPublisher()
 {
-    m_producer->purge(RdKafka::Producer::PURGE_QUEUE);
-    m_producer->flush(0);
-    m_producer->poll(0);
-
-    delete m_producer; 
-    m_producer = nullptr;
-    //m_loggingInst->writeLog("Producer terminated for :%s Partition No: %d\n",m_topicName.c_str(),m_topicPartition);
-        
+    rd_kafka_destroy(producer);
 }
 
 void kafkaPublisher::produce()
 {
-    std::string errstr;
-            m_producer = RdKafka::Producer::create(m_globalCfg, errstr);
+  // Produce data by selecting random values from these lists.
+  int message_count = 10;
+  const char *topic = "purchases";
+  const char *user_ids[6] = {"eabara", "jsmith", "sgarcia", "jbernard", "htanaka", "awalther"};
+  const char *products[5] = {"book", "alarm clock", "t-shirts", "gift card", "batteries"};
 
-            if (!m_producer) 
-            {
-             // EPrintf("Failed to create producer: %s\n" ,errstr.c_str());
-              exit(1);
-            }
+  for (int i = 0; i < message_count; i++) 
+  {
+      const char *key =  user_ids[random() % ARR_SIZE(user_ids)];
+      const char *value =  products[random() % ARR_SIZE(products)];
+      size_t key_len = strlen(key);
+      size_t value_len = strlen(value);
 
-            int64_t msgCount  = 0;
-            /*
-            for(auto msg : m_msgMap)
-            {
+      rd_kafka_resp_err_t err;
 
-              auto msgPayload = msg.m_payload;
-              int64_t msgLen = msg.m_msgLen;
+      err = rd_kafka_producev(producer,
+                              RD_KAFKA_V_TOPIC(topic),
+                              RD_KAFKA_V_MSGFLAGS(RD_KAFKA_MSG_F_COPY),
+                              RD_KAFKA_V_KEY((void*)key, key_len),
+                              RD_KAFKA_V_VALUE((void*)value, value_len),
+                              RD_KAFKA_V_OPAQUE(NULL),
+                              RD_KAFKA_V_END);
 
-              RdKafka::ErrorCode resp =m_producer->produce( m_topicName, 
-                                                            m_topicPartition,
-                                                          RdKafka::Producer::RK_MSG_COPY ,
-                                                          const_cast<char*>(msgPayload), msgLen ,
-                                                          NULL, 0,
-                                                          0,
-                                                          msg.m_headers,
-                                                          NULL);
+      if (err) 
+      {
+          std::cout<<"error" <<std::endl;
+          return ;
+      } else 
+      {
+          std::cout<<"error" <<std::endl;
 
-              if (resp != RdKafka::ERR_NO_ERROR) 
-              {
-                EPrintf("Produce failed:: %s\n" ,(RdKafka::err2str(resp)).c_str());
-                msg.destroyHeaders();
-              }
-              
-              m_producer->poll(100);
-              msg.destroyMsg();
-              msgCount++;
-              
-            }*/
-            //m_loggingInst->writeLog("Completed Producing :%s fileName:%s With Message Count of:%d\n",m_producer->name().c_str(),m_fileName.c_str(),msgCount);
-        
+      rd_kafka_poll(producer, 0);
+      }
+  }
+  // Block until the messages are all sent.
+  std::cout<<"error" <<std::endl;
+  rd_kafka_flush(producer, 10 * 1000);
+
+  if (rd_kafka_outq_len(producer) > 0)
+  {
+      std::cout<<"error" <<std::endl;
+  }
 }
