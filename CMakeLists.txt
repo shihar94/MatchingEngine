@@ -82,11 +82,8 @@ link_libraries(pthread)
 add_executable(${PROJECT_NAME} main.cpp ${all_SRCS})
 
 target_link_libraries(${PROJECT_NAME} pthread librdkafka++.a librdkafka.a crypto ssl)
-#target_link_libraries(${PROJECT_NAME}   PUBLIC PkgConfig::rdkafka)
-#target_link_libraries(${PROJECT_NAME}   PUBLIC PkgConfig::rdkafka++)
-#target_link_libraries(${PROJECT_NAME}   PRIVATE Threads::Threads)
 
-#add_executable(testingScript testingScript.cpp ${all_SRCS})
+add_executable(testingScript testingScript.cpp ${all_SRCS})
 
 enable_testing()
 

@@ -8,6 +8,8 @@
 #define KAFKA_SASL_MECHANISM		"sasl.mechanism"
 #define KAFKA_SASL_USERNAME		"sasl.username"
 #define KAFKA_SASL_PASSWORD		"sasl.password"
+#define KAFKA_BOOTSTRAP_SERVERS "bootstrap.servers"
+
 
 
 #endif

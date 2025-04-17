@@ -1,6 +1,7 @@
 #include "kafkaPublisher.h"
 #include <iostream>
 #include "common.h"
+#include "kafkaDefs.h"
 
 #define ARR_SIZE(arr) ( sizeof((arr)) / sizeof((arr[0])) )
 static void dr_msg_cb (rd_kafka_t *kafka_handle,
@@ -17,7 +18,7 @@ kafkaPublisher::kafkaPublisher()
     conf = rd_kafka_conf_new();
 
     // User-specific properties that you must set
-    set_config(conf, "bootstrap.servers", "localhost:9092");
+    set_config(conf, KAFKA_BOOTSTRAP_SERVERS, "localhost:9092");
 
     // Fixed properties
     set_config(conf, "acks", "all");
