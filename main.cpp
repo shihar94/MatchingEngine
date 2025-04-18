@@ -11,6 +11,11 @@
 #include <vector>
 #include <ThreadQueue.h>
 #include <kafka/kafkaPublisher.h>
+#include <nlohmann/json.hpp>
+
+
+// for convenience
+using json = nlohmann::json;
 
 void printPID()
 {

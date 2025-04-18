@@ -71,6 +71,7 @@ pkg_check_modules(rdkafka REQUIRED IMPORTED_TARGET rdkafka)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(rdkafka++ REQUIRED IMPORTED_TARGET rdkafka++)
 
+find_package(nlohmann_json 3.7.0 REQUIRED)
 
 
 find_package(Threads REQUIRED)
@@ -81,7 +82,8 @@ link_libraries(pthread)
 
 add_executable(${PROJECT_NAME} main.cpp ${all_SRCS})
 
-target_link_libraries(${PROJECT_NAME} pthread librdkafka++.a librdkafka.a crypto ssl)
+target_link_libraries(${PROJECT_NAME} pthread librdkafka++.a librdkafka.a crypto ssl nlohmann_json::nlohmann_json)
+
 
 add_executable(testingScript testingScript.cpp ${all_SRCS})
 
