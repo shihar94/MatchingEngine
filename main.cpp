@@ -37,6 +37,7 @@ int  main(int argc , char* argv[]){
 
     std::string topicName = "orders";
     kafkaPublisher k;
+    k.produce();
 
     
     return 0;
