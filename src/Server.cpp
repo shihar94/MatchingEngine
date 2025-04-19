@@ -3,6 +3,7 @@
 #include <string.h>
 #include <kafka/kafkaPublisher.h>
 std::mutex om;
+
 Server::Server(int port)
 {
     m_port = port;
