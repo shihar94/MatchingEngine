@@ -6,7 +6,7 @@
 
 #include "defs.h"
 #include<vector>
-
+#include "TradeReportCapture.h"
 
 //this is a node which is similar to a linkedlist node
 struct OrderNode{
@@ -21,6 +21,10 @@ class PricePoint
         //OrderNode* m_tail;  //have to implement this it will make easy adding orders at the end
         //double m_pricePoint;
         int m_availableOrders = 0;
+        bool availableOrders();
+    
+    private:
+        bool FillTradeMatches(Order& order , std::vector<TradeReport>& matchedTrades);
     public:
         PricePoint();
         ~PricePoint();
@@ -29,9 +33,7 @@ class PricePoint
         void printOrders();
         bool matchOrder(Order& order , std::vector<TradeReport>& matchedTrades);
         int getAvailableOrders();
-        TradeReport createPFILLTradeMatches(Order& m_order , Order& c_order);
-        TradeReport newOrder(Order& primary_order);
-        TradeReport createFILLTradeMatches(Order& primary_order , Order& secondary_order);
+        TradeReportCapture trc;
 };
 
 #endif
