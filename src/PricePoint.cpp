@@ -84,6 +84,8 @@ bool PricePoint::availableOrders()
         std::cout << "No Available Orders to be matched" << std::endl;
         return false;
     }
+
+    return true;
 }
 
 bool PricePoint::FillTradeMatches(Order& order , std::vector<TradeReport>& matchedTrades)
@@ -102,13 +104,16 @@ bool PricePoint::FillTradeMatches(Order& order , std::vector<TradeReport>& match
 bool PricePoint::matchOrder(Order& order , std::vector<TradeReport>& matchedTrades)
 {
    // std::cout << "Matching order for order id: " << order.clientOrderId<< std::endl;
-    return availableOrders();
+    if(!availableOrders())
+    {
+        return false;
+    }
 
 
     OrderNode* tempNode = m_head;
     if(tempNode->order.quantity ==  order.quantity)
     {
-        return FillTradeMatches(order,matchedTrades);
+        //return FillTradeMatches(order,matchedTrades);
         matchedTrades.push_back(trc.createFILLTradeMatches(order,tempNode->order));
         m_head = tempNode->next;
         delete tempNode;
