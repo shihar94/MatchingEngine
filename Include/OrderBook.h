@@ -25,7 +25,7 @@ class OrderBook
 
         void addBuyOrder(Order order , std::vector<TradeReport>& matchedTrades);
         void addSellOrder(Order order, std::vector<TradeReport>& matchedTrades);
-
+        void handleOrderHelper(Order& order, std::map<priceVal , PricePoint>& m_priceOrderMap , std::vector<TradeReport>& matchedTrades);
     private:
 
         std::map<priceVal , PricePoint> m_priceBuyOrderMap;

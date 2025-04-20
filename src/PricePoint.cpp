@@ -104,10 +104,7 @@ bool PricePoint::FillTradeMatches(Order& order , std::vector<TradeReport>& match
 bool PricePoint::matchOrder(Order& order , std::vector<TradeReport>& matchedTrades)
 {
    // std::cout << "Matching order for order id: " << order.clientOrderId<< std::endl;
-    if(!availableOrders())
-    {
-        return false;
-    }
+    
 
 
     OrderNode* tempNode = m_head;

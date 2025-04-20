@@ -21,7 +21,6 @@ class PricePoint
         //OrderNode* m_tail;  //have to implement this it will make easy adding orders at the end
         //double m_pricePoint;
         int m_availableOrders = 0;
-        bool availableOrders();
     
     private:
         bool FillTradeMatches(Order& order , std::vector<TradeReport>& matchedTrades);
@@ -33,6 +32,7 @@ class PricePoint
         void printOrders();
         bool matchOrder(Order& order , std::vector<TradeReport>& matchedTrades);
         int getAvailableOrders();
+        bool availableOrders();
         TradeReportCapture trc;
 };
 

@@ -35,7 +35,6 @@ void OrderBook::cancelOrder(Order order)
 void OrderBook::handleOrder(Order& order , std::vector<TradeReport>& matchedTrades)
 {
     //handle the order
-
     //1. check if the order is a buy or sell order
     //2. if buy order, check if there is a matching sell order
     //3. if sell order, check if there is a matching buy order
@@ -49,7 +48,12 @@ void OrderBook::handleOrder(Order& order , std::vector<TradeReport>& matchedTrad
         }
         else
         {
-            if(!m_priceSellOrderMap[price].matchOrder(order , matchedTrades)){
+            if(!m_priceSellOrderMap[price].availableOrders())
+            {
+                addBuyOrder(order , matchedTrades);
+            }
+            else if(!m_priceSellOrderMap[price].matchOrder(order , matchedTrades))
+            {
                 std::cout << order.quantity <<std::endl;
                 addBuyOrder(order , matchedTrades);
             }
@@ -63,14 +67,39 @@ void OrderBook::handleOrder(Order& order , std::vector<TradeReport>& matchedTrad
             addSellOrder(order , matchedTrades);
         }
         else
-        {
-            if(!m_priceBuyOrderMap[price].matchOrder(order , matchedTrades)){
+        {   if(!m_priceBuyOrderMap[price].availableOrders())
+            {
+                addSellOrder(order , matchedTrades);
+            }
+            else if(!m_priceBuyOrderMap[price].matchOrder(order , matchedTrades)){
                 addSellOrder(order , matchedTrades);
             }
 
         }
     }
 }   
+
+
+void OrderBook::handleOrderHelper(Order& order, std::map<priceVal , PricePoint>& m_priceOrderMap , std::vector<TradeReport>& matchedTrades)
+{
+    double price = order.price;
+    if(m_priceOrderMap.find(price) == m_priceOrderMap.end())
+    {
+        addSellOrder(order , matchedTrades);
+    }
+    else
+    {   
+        if(!m_priceOrderMap[price].availableOrders())
+        {
+            addBuyOrder(order , matchedTrades);
+        }
+        else if(!m_priceOrderMap[price].matchOrder(order , matchedTrades))
+        {
+                addSellOrder(order , matchedTrades);
+        }
+
+    }
+}
 
 void OrderBook::printOrderBook()
 {
