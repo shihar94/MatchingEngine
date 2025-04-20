@@ -3,17 +3,6 @@
 #include <vector>
 #include "defs.h"
 #include <string.h>
-PricePoint::PricePoint()
-{
-    //std::cout << "PricePoint constructor called for price: " << std::endl;
-    
-}
-
-
-PricePoint::~PricePoint()
-{
-    delete m_head;
-}
 
 
 void PricePoint::addOrder(Order order , std::vector<TradeReport>& tradeReport)
@@ -88,29 +77,13 @@ bool PricePoint::availableOrders()
     return true;
 }
 
-bool PricePoint::FillTradeMatches(Order& order , std::vector<TradeReport>& matchedTrades)
-{
-    OrderNode* tempNode = m_head;
-    if(tempNode->order.quantity ==  order.quantity)
-    {
-        matchedTrades.push_back(trc.createFILLTradeMatches(order,tempNode->order));
-        m_head = tempNode->next;
-        delete tempNode;
-        m_availableOrders = m_availableOrders - 1;
-        return true;
-    }
-} 
+ 
 
 bool PricePoint::matchOrder(Order& order , std::vector<TradeReport>& matchedTrades)
 {
-   // std::cout << "Matching order for order id: " << order.clientOrderId<< std::endl;
-    
-
-
     OrderNode* tempNode = m_head;
     if(tempNode->order.quantity ==  order.quantity)
     {
-        //return FillTradeMatches(order,matchedTrades);
         matchedTrades.push_back(trc.createFILLTradeMatches(order,tempNode->order));
         m_head = tempNode->next;
         delete tempNode;
@@ -163,9 +136,3 @@ bool PricePoint::matchOrder(Order& order , std::vector<TradeReport>& matchedTrad
     }
     return false;
 }   
-
-
-int PricePoint::getAvailableOrders()
-{
-    return m_availableOrders;
-}

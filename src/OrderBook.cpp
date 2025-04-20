@@ -5,6 +5,7 @@ OrderBook::OrderBook(std::string symbol)
 {
     std::cout << "OrderBook constructor called for instrument: " << symbol << std::endl;
 }
+
 OrderBook::~OrderBook()
 {
     std::cout << "OrderBook destructor called" << std::endl;
@@ -19,11 +20,8 @@ void OrderBook::addSellOrder(Order order , std::vector<TradeReport>& matchedTrad
 
 void OrderBook::addBuyOrder(Order order, std::vector<TradeReport>& matchedTrades)
 {
-    //add the order to the orderbook
-    //1 retrieve the price point for the map 
     double price = order.price;
-    m_priceBuyOrderMap[price].addOrder(order,matchedTrades);
-    
+    m_priceBuyOrderMap[price].addOrder(order,matchedTrades); 
 }
 
 void OrderBook::cancelOrder(Order order)
@@ -78,7 +76,6 @@ void OrderBook::handleOrder(Order& order , std::vector<TradeReport>& matchedTrad
         }
     }
 }   
-
 
 void OrderBook::handleOrderHelper(Order& order, std::map<priceVal , PricePoint>& m_priceOrderMap , std::vector<TradeReport>& matchedTrades)
 {

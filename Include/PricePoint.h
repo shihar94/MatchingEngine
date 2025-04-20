@@ -22,16 +22,15 @@ class PricePoint
         //double m_pricePoint;
         int m_availableOrders = 0;
     
-    private:
-        bool FillTradeMatches(Order& order , std::vector<TradeReport>& matchedTrades);
+    
     public:
-        PricePoint();
-        ~PricePoint();
+        PricePoint(){};
+        ~PricePoint(){delete m_head;};
         void addOrder(Order order,std::vector <TradeReport>& tradeReport);
         void removeOrder(Order order);
         void printOrders();
         bool matchOrder(Order& order , std::vector<TradeReport>& matchedTrades);
-        int getAvailableOrders();
+        int getAvailableOrders(){return m_availableOrders;};
         bool availableOrders();
         TradeReportCapture trc;
 };
