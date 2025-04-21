@@ -17,7 +17,7 @@ void OrderBook::addOrder(Order order , std::vector<TradeReport>& matchedTrades )
     {
         addBuyOrder(order,matchedTrades);
     }
-    else
+    else if (order.type = ORDER_TYPE::SELL)
     {
         addSellOrder(order , matchedTrades);
     }
