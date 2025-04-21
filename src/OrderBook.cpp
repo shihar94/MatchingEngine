@@ -11,6 +11,18 @@ OrderBook::~OrderBook()
     std::cout << "OrderBook destructor called" << std::endl;
 }
 
+void OrderBook::addOrder(Order order , std::vector<TradeReport>& matchedTrades )
+{
+    if(order.type = ORDER_TYPE::BUY)
+    {
+        addBuyOrder(order,matchedTrades);
+    }
+    else
+    {
+        addSellOrder(order , matchedTrades);
+    }
+}
+
 void OrderBook::addSellOrder(Order order , std::vector<TradeReport>& matchedTrades)
 {
     double price = order.price;
@@ -36,44 +48,13 @@ void OrderBook::handleOrder(Order& order , std::vector<TradeReport>& matchedTrad
     //1. check if the order is a buy or sell order
     //2. if buy order, check if there is a matching sell order
     //3. if sell order, check if there is a matching buy order
-
     if(order.type == ORDER_TYPE::BUY)
     {
-        double price = order.price;
-        if(m_priceSellOrderMap.find(price) == m_priceSellOrderMap.end())
-        {
-            addBuyOrder(order , matchedTrades);
-        }
-        else
-        {
-            if(!m_priceSellOrderMap[price].availableOrders())
-            {
-                addBuyOrder(order , matchedTrades);
-            }
-            else if(!m_priceSellOrderMap[price].matchOrder(order , matchedTrades))
-            {
-                std::cout << order.quantity <<std::endl;
-                addBuyOrder(order , matchedTrades);
-            }
-        }
+        handleOrderHelper(order, m_priceSellOrderMap , matchedTrades);
     }
     else
     {
-        double price = order.price;
-        if(m_priceBuyOrderMap.find(price) == m_priceBuyOrderMap.end())
-        {
-            addSellOrder(order , matchedTrades);
-        }
-        else
-        {   if(!m_priceBuyOrderMap[price].availableOrders())
-            {
-                addSellOrder(order , matchedTrades);
-            }
-            else if(!m_priceBuyOrderMap[price].matchOrder(order , matchedTrades)){
-                addSellOrder(order , matchedTrades);
-            }
-
-        }
+        handleOrderHelper(order, m_priceBuyOrderMap , matchedTrades);
     }
 }   
 
@@ -82,17 +63,17 @@ void OrderBook::handleOrderHelper(Order& order, std::map<priceVal , PricePoint>&
     double price = order.price;
     if(m_priceOrderMap.find(price) == m_priceOrderMap.end())
     {
-        addSellOrder(order , matchedTrades);
+        addOrder(order , matchedTrades);
     }
     else
     {   
         if(!m_priceOrderMap[price].availableOrders())
         {
-            addBuyOrder(order , matchedTrades);
+            addOrder(order , matchedTrades);
         }
         else if(!m_priceOrderMap[price].matchOrder(order , matchedTrades))
         {
-                addSellOrder(order , matchedTrades);
+                addOrder(order , matchedTrades);
         }
 
     }

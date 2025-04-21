@@ -13,8 +13,6 @@ void PricePoint::addOrder(Order order , std::vector<TradeReport>& tradeReport)
     std::cout << "Price: " << order.price << std::endl;
     std::cout << "Quantity: " << order.quantity << std::endl;
     std::cout << "Type: " << order.type << std::endl;*/
-
-
     OrderNode* tempNode = new OrderNode();
     tempNode -> order = order;
     tempNode -> next = nullptr;
