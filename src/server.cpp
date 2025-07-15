@@ -1,17 +1,4 @@
 #include "server.h"
-
-server::server(int port)
-{
-    m_port = port;
-    m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-    if(m_serverSocket == -1)
-    {
-        std::cerr << "Can't create a socket! Quiting..."<< std::endl;
-        exit(1);
-    } 
-}
-
-
 void server::init()
 {
     m_hint.sin_family = AF_INET; 

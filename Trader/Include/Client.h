@@ -40,7 +40,7 @@ class Client
         OrderGenerator* orderGenerator;
         std::string m_clientID = "";
         bool m_read = false;
-        std::atomic_int m_indexToRead= 0;
+        int m_indexToRead= 0;
         std::string m_clientOrderIDCurr ="";
 };
 

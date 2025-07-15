@@ -12,7 +12,7 @@
 #include <ThreadQueue.h>
 #include <kafka/kafkaPublisher.h>
 #include <nlohmann/json.hpp>
-
+#include "ME.h"
 
 // for convenience
 using json = nlohmann::json;
@@ -38,7 +38,7 @@ int  main(int argc , char* argv[]){
     printPID();
     int p = std::stoi((argv[1]));   
 
-    Server server(p);
+    ME server(p);
     server.init();
     server.run();
     

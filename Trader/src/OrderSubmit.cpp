@@ -1,6 +1,7 @@
 #include "OrderSubmit.h"
 #include <iostream>
 #include <string>
+#include <cstring>
 OrderSubmit::OrderSubmit(){
     std::cout << "New order submit created" << std::endl;
     m_order.order_id = 0;
