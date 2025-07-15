@@ -20,11 +20,11 @@ struct Data
     int j;
 };
 
-class Server
+class server
 {
     public:
-        Server(int port);
-        ~Server(){};
+        server(int port);
+        ~server(){};
         void init();
         void run(); //this is the function where polling takes place
 

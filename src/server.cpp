@@ -1,6 +1,6 @@
 #include "server.h"
 
-Server::Server(int port)
+server::server(int port)
 {
     m_port = port;
     m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -12,7 +12,7 @@ Server::Server(int port)
 }
 
 
-void Server::init()
+void server::init()
 {
     m_hint.sin_family = AF_INET; 
     m_hint.sin_port = htons(m_port);
@@ -36,7 +36,7 @@ void Server::init()
     poll_sets.push_back(listen_pollfd);
 }
 
-void Server::add_client(int client_sock)
+void server::add_client(int client_sock)
 {
     pollfd client_pollfd;
     client_pollfd.fd = client_sock;
@@ -46,7 +46,7 @@ void Server::add_client(int client_sock)
     printf("now_client_num: %u\n", (unsigned int)poll_sets.size()-1);
 }
 
-void Server::del_client(std::vector<pollfd>::iterator it)
+void server::del_client(std::vector<pollfd>::iterator it)
 {
     poll_sets.erase(it);
     //print_dconn(it->fd);
@@ -55,7 +55,7 @@ void Server::del_client(std::vector<pollfd>::iterator it)
 }
 
 //this should poll
-void Server::run()
+void server::run()
 {
     while(1)
     {
@@ -113,7 +113,7 @@ void Server::run()
     }
 }
 
-void Server::set_reuse_addr(int listen_sock)
+void server::set_reuse_addr(int listen_sock)
 {
     int ret;
     if (setsockopt(listen_sock, SOL_SOCKET, SO_REUSEADDR, &ret, sizeof(ret)) == -1) 
@@ -124,7 +124,7 @@ void Server::set_reuse_addr(int listen_sock)
 }
 
 
-void Server::onMessage(int clientSocket)
+void server::onMessage(int clientSocket)
 {
     Data data;
     int read_size  = read(clientSocket, &data, sizeof(Data));
@@ -149,11 +149,11 @@ void Server::onMessage(int clientSocket)
         //print_send(it->fd, message);
     }
 }
-void Server::onConnect()
+void server::onConnect()
 {
 
 }
-void Server::onDisconnect()
+void server::onDisconnect()
 {
 
 }
