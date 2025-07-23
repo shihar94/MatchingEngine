@@ -40,6 +40,9 @@ class server
         void run(); //this is the function where polling takes place
 
         //virtual functions where derived class server should implement
+        //virtual functions are runtime polymorphism the actual calling will be resolved in runtime. 
+        //virtual functions are alway late binding as it happens at runtime. 
+        // its slower because the vptr needs to access the correct function from the vtable 
         virtual void onMessage(int clientSocket);
         virtual void onConnect();
         virtual void onDisconnect();
