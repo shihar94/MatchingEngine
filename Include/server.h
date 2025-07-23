@@ -12,6 +12,7 @@
 #include <thread> 
 #include <mutex>
 #include <poll.h>
+#include <unordered_map>
 #include "OrderBook.h"
 #include "PricePoint.h"
 using namespace std;
@@ -61,6 +62,10 @@ class server
         std::vector<pollfd> poll_sets;
         pollfd listen_pollfd;
     public:
-        std::map<std::string , OrderBook*> m_orderBookS;
+        //unordered map is faster due to hash table mechanism and for retriving one element
+        //highly unlikely to get same several hashes. 
+        //searching is O(1) worst case is O(n) if hash function is not good only. 
+        //in map searching is O(logN)
+        std::unordered_map<std::string , OrderBook*> m_orderBookS;
         
 };
