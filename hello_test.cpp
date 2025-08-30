@@ -23,15 +23,13 @@ struct Order
 TEST(OrderBookTestNoMatch,BasicAssertions)
 {
   OrderBook m_orderBook("ABCD"); 
-  Order order{"client11" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY};
+  Order order{1 ,1101 , 100 ,ORDER_TYPE::BUY , 11.01 , "client11" , "ABCD"};
   std::vector<TradeReport> matchedTrades;
   m_orderBook.handleOrder(order,matchedTrades);
-  
   std::string matched_mClientOrderID = matchedTrades[0].matchedClientOrderId;
   std::string matched_ClientOrderID = matchedTrades[0].clientOrderId;
   std::string symbol = matchedTrades[0].symbol;
-
-  TradeReport expected{"ABCD" , "client11" , "client11" , 11.01 , 1 , 1 , 0 , 100 , TRADE_MATCHES::NEW};
+  TradeReport expected{1,1,0,100,TRADE_MATCHES::NEW,"ABCD" , "client11" , "client11" , 11.01};
   //the tests to check if the received tr is correct
   EXPECT_EQ(1 , matchedTrades.size()); //validate the size to see amount of TR received
   EXPECT_EQ(expected.quantityLeft, matchedTrades[0].quantityLeft);
@@ -43,13 +41,15 @@ TEST(OrderBookTestNoMatch,BasicAssertions)
   EXPECT_EQ(symbol, "ABCD");
 }
 
-
 //test matches with single order
 TEST(OrderBookTestSingleMatch,BasicAssertions)
 {
   OrderBook m_orderBook("ABCD"); 
-  Order order1{"client11" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY}; //secondary order
-  Order order2{"client21" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::SELL}; //primary order
+ // Order order1{"client11" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY}; 
+  //Order order2{"client21" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::SELL}; 
+
+  Order order1{1 ,1101 , 100 ,ORDER_TYPE::BUY , 11.01 , "client11" , "ABCD"};//secondary order
+  Order order2{1 ,1101 , 100 ,ORDER_TYPE::SELL, 11.01 , "client21" , "ABCD"};//primary order
   std::vector<TradeReport> matchedTrades1;
   m_orderBook.handleOrder(order1,matchedTrades1);
   std::vector<TradeReport> matchedTrades2;
@@ -59,7 +59,7 @@ TEST(OrderBookTestSingleMatch,BasicAssertions)
   std::string matched_ClientOrderID = matchedTrades2[0].clientOrderId;
   std::string symbol = matchedTrades2[0].symbol;
   //expect primary order tr
-  TradeReport expected{"ABCD" , "client21" , "client11" , 11.01 , 1 , 1 , 100 , 0 , TRADE_MATCHES::FILL};
+  TradeReport expected{1,1,100,0,TRADE_MATCHES::FILL,"ABCD" , "client21" , "client11" , 11.01};
   //the tests to check if the received tr is correct
   EXPECT_EQ(1 , matchedTrades2.size()); //validate the size to see amount of TR received
   EXPECT_EQ(expected.quantityLeft, matchedTrades2[0].quantityLeft);
@@ -75,11 +75,12 @@ TEST(OrderBookTestSingleMatch,BasicAssertions)
 TEST(OrderBookTestMatchPartialFill , BasicAssertions)
 {
   OrderBook m_orderBook("ABCD");
-  Order order1{"client11" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY}; //secondary order
-  Order order2{"client21" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY}; //secondary order
-  Order order3{"client31" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY}; //secondary order
-    
-  Order order4{"client41" , "ABCD" , 11.01 , 1 , 1101, 400 , ORDER_TYPE::SELL}; //primary order
+  Order order1{1 ,1101 , 100 ,ORDER_TYPE::BUY , 11.01 , "client11" , "ABCD"};//secondary order
+  Order order2{1 ,1101 , 100 ,ORDER_TYPE::BUY, 11.01 , "client21" , "ABCD"};//secondary order
+  Order order3{1 ,1101 , 100 ,ORDER_TYPE::BUY , 11.01 , "client31" , "ABCD"};//secondary order
+
+  Order order4{1 ,1101 , 400 ,ORDER_TYPE::SELL, 11.01 , "client41" , "ABCD"};//primary order
+
 
   std::vector<TradeReport> matchedTrades1 , matchedTrades2 , matchedTrades3, matchedTrades4;
   m_orderBook.handleOrder(order1,matchedTrades1);
@@ -91,10 +92,10 @@ TEST(OrderBookTestMatchPartialFill , BasicAssertions)
 
   EXPECT_EQ(4 , matchedTrades4.size()); //validate the size to see amount of TR received
   
-  TradeReport expected1{"ABCD" , "client11" , "client41" , 11.01 , 1 , 1 , 100 , 300 , TRADE_MATCHES::PFILL};
-  TradeReport expected2{"ABCD" , "client21" , "client41" , 11.01 , 1 , 1 , 100 , 200 , TRADE_MATCHES::PFILL};
-  TradeReport expected3{"ABCD" , "client31" , "client41" , 11.01 , 1 , 1 , 100 , 100 , TRADE_MATCHES::PFILL};
-  TradeReport expected4{"ABCD" , "client41" , "client41" , 11.01 , 1 , 1 ,   0 , 100 , TRADE_MATCHES::NEW};
+  TradeReport expected1{1,1,100,300,TRADE_MATCHES::PFILL,"ABCD" , "client11" , "client41" , 11.01};
+  TradeReport expected2{1,1,100,200,TRADE_MATCHES::PFILL,"ABCD" , "client21" , "client41" , 11.01};
+  TradeReport expected3{1,1,100,100,TRADE_MATCHES::PFILL,"ABCD" , "client31" , "client41" , 11.01};
+  TradeReport expected4{1,1,0,100,TRADE_MATCHES::NEW,"ABCD" , "client41" , "client41" , 11.01};
   
   EXPECT_EQ(expected1.quantityLeft, matchedTrades4[0].quantityLeft);
   EXPECT_EQ(expected1.price, matchedTrades4[0].price);

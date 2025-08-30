@@ -29,6 +29,10 @@ void printPID()
 int  main(int argc , char* argv[]){
 
     
+    assert(sizeof(Order) == ORDER_SIZE) ;
+    assert(sizeof(TradeReport) == TR_SIZE);
+
+    
     if(argc < 2)
     {   
         std::cout << "./Matching_Engine portNo" << std::endl;

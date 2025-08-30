@@ -2,7 +2,8 @@
 #define DEFS_H
 
 #include <thread>
-
+#define ORDER_SIZE 40
+#define TR_SIZE 56
 enum ORDER_TYPE
 {
     RESET = -1,
@@ -19,26 +20,28 @@ enum TRADE_MATCHES
 
 struct Order
 {
-    char clientOrderId[11];
-    char symbol[5];
-    double price;
-    int order_id;
-    int prize;
-    int quantity;
-    ORDER_TYPE type;
+    //aligned appropriately to reduce the padding 0 padding currently 
+    int order_id; //4bytes
+    int prize; //4 bytes
+    int quantity; //4 bytes 
+    ORDER_TYPE type; //4 bytes 
+    double price; //8 bytes
+    char clientOrderId[11];  //11 bytes
+    char symbol[5]; //5 bytes
 };
 
 struct TradeReport
 {
-    char symbol[5];
-    char matchedClientOrderId[11];
-    char clientOrderId[11];
-    double price;
-    int own_order_id;
-    int other_order_id;
-    int quantityMatched;
-    int quantityLeft;
-    TRADE_MATCHES type;
+    //properyly aligned to obtain 56 bytes with padding of 1 byte
+    int own_order_id; //4 bytes
+    int other_order_id; //4 bytes
+    int quantityMatched; //4 bytes
+    int quantityLeft; //4 bytes
+    TRADE_MATCHES type;//4 bytes
+    char symbol[5]; //5 bytes
+    char matchedClientOrderId[11]; //11 bytes
+    char clientOrderId[11]; //11 bytes
+    double price; //8 bytes 
 };
 
 

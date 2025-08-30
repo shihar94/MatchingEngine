@@ -12,11 +12,17 @@ int main()
 {
 
     OrderBook m_orderBook("ABCD");
-    Order order1{"client11" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY}; //secondary order
-    Order order2{"client21" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY}; //primary order
-    Order order3{"client31" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY}; //primary order
+    Order order1{1 ,1101 , 100 ,ORDER_TYPE::BUY , 11.01 , "client11" , "ABCD"};
+    Order order2{1 ,1101 , 100 ,ORDER_TYPE::BUY , 11.01 , "client21" , "ABCD"};
+    Order order3{1 ,1101 , 100 ,ORDER_TYPE::BUY , 11.01 , "client31" , "ABCD"}; 
     
-    Order order4{"client41" , "ABCD" , 11.01 , 1 , 1101, 400 , ORDER_TYPE::SELL}; //primary order
+    Order order4{1 ,1101 , 400 ,ORDER_TYPE::SELL , 11.01 , "client41" , "ABCD"};
+    
+    //Order order1{"client11" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY}; //secondary order
+    //Order order2{"client21" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY}; //primary order
+    //Order order3{"client31" , "ABCD" , 11.01 , 1 , 1101, 100 , ORDER_TYPE::BUY}; //primary order
+    
+    //Order order4{"client41" , "ABCD" , 11.01 , 1 , 1101, 400 , ORDER_TYPE::SELL}; //primary order
     std::vector<TradeReport> matchedTrades1 , matchedTrades2 , matchedTrades3, matchedTrades4;
     m_orderBook.handleOrder(order1,matchedTrades1);
     m_orderBook.handleOrder(order2,matchedTrades2);
