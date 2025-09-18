@@ -10,41 +10,52 @@
 #include <thread> 
 #include <mutex>
 #include "server.h"
+
 std::mutex om1;
+
+
 class ME : public server
 {
     public:
         ME(int port):server(port){}
+        
+        void onConnect(int ClientSock)
+        {
+            std::cout << "Client Connected ID : " <<ClientSock << std::endl; 
+            if(m_ClientList.find(ClientSock) == m_ClientList.end())
+            {
+                m_ClientList[ClientSock] = ClientSock;
+            }
+        }
+
         void onMessage(int socket)
         {
-            Order oNew;
+            
             oNew.order_id = 0;
             oNew.price = 0;
             oNew.quantity = 0;
             oNew.type = (ORDER_TYPE)1;
             int n = read(socket, &oNew, sizeof(Order));
-
             if(n == sizeof(Order) && oNew.type <=2)
             {
                 std::cout<<oNew.clientOrderId <<" "<<oNew.symbol <<" " << oNew.order_id << " " << oNew.price << " "<< oNew.quantity << " " << oNew.type<< std::endl;
-            //exit(1)
+            
             }
             std::lock_guard<std::mutex> lock(om1);
-            if(m_orderBookS.find(std::string(oNew.symbol)) == m_orderBookS.end())
-            {
-                m_orderBookS[std::string(oNew.symbol)]=new OrderBook(std::string(oNew.symbol));
-                std::cout<<"Hello\n";
-            }
-            std::vector<TradeReport> matchedTrades;
-            m_orderBookS[std::string(oNew.symbol)]->handleOrder(oNew , matchedTrades);
+            std::vector<TradeReport>  matchedTrades = orderHandler.handleOrderMessage(oNew);
             uint32_t number_elements = matchedTrades.size();
             send(socket, &number_elements, sizeof(number_elements), 0);
+            
             for(int i = 0 ; i < matchedTrades.size() ; i++)
             {
                 int n = write(socket,&matchedTrades[i],sizeof(TradeReport));
 
             }
           
-        m_orderBookS[std::string(oNew.symbol)]->printOrderBook();
         }
+
+    private:
+        map<int , int > m_ClientList;
+        Order oNew;
+    
 };

@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/ubuntu/workspace/MatchingEngine/Trader/bu/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

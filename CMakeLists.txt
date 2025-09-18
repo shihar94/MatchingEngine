@@ -32,6 +32,7 @@ include_directories(
         ${PROJECT_SOURCE_DIR}/Include
         ${PROJECT_SOURCE_DIR}/Common
         ${PROJECT_SOURCE_DIR}/src
+        ${PROJECT_SOURCE_DIR}/OrderClass
 )
 
 find_package(GTest CONFIG REQUIRED)
@@ -47,6 +48,7 @@ file(GLOB all_SRCS
         "${PROJECT_SOURCE_DIR}/src/kafka/*.cpp"
         "${PROJECT_SOURCE_DIR}/src/*.c"
         "${PROJECT_SOURCE_DIR}/test/*.cpp"
+        "${PROJECT_SOURCE_DIR}/OrderClass/*.cpp"
         )
 
 set(CMAKE_CXX_STANDARD 17)

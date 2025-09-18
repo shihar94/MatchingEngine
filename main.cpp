@@ -13,7 +13,7 @@
 #include <kafka/kafkaPublisher.h>
 #include <nlohmann/json.hpp>
 #include "ME.h"
-
+#include "MemoryPool.h"
 // for convenience
 using json = nlohmann::json;
 

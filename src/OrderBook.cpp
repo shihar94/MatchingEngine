@@ -13,11 +13,11 @@ OrderBook::~OrderBook()
 
 void OrderBook::addOrder(Order order , std::vector<TradeReport>& matchedTrades )
 {
-    if(order.type = ORDER_TYPE::BUY)
+    if ((order.type = ORDER_TYPE::BUY))
     {
         addBuyOrder(order,matchedTrades);
     }
-    else if (order.type = ORDER_TYPE::SELL)
+    else if ((order.type = ORDER_TYPE::SELL))
     {
         addSellOrder(order , matchedTrades);
     }

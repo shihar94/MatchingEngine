@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include "OrderBook.h"
 #include "PricePoint.h"
+#include "OrderHandler.h"
 using namespace std;
 
 struct Data
@@ -45,7 +46,7 @@ class server
         //virtual functions are alway late binding as it happens at runtime. 
         // its slower because the vptr needs to access the correct function from the vtable 
         virtual void onMessage(int clientSocket);
-        virtual void onConnect();
+        virtual void onConnect(int ClientSock);
         virtual void onDisconnect();
     
     private:
@@ -66,6 +67,7 @@ class server
         //highly unlikely to get same several hashes. 
         //searching is O(1) worst case is O(n) if hash function is not good only. 
         //in map searching is O(logN)
-        std::unordered_map<std::string , OrderBook*> m_orderBookS;
+        
+        OrderHandler orderHandler;
         
 };

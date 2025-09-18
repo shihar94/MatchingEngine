@@ -1,27 +1,29 @@
-//this is to maintain a linkedlist of orders which for a same price point
-//which will arranged in time priority.
+/*
+The purpose of this is to manage different order types 
+such as Market Order , IOC order etc. 
+To have a common interface so depending on the order type the correct function gets called
+limit orders -- common one executes against matching if not sits in the orderbook
+IOC - Immediate or cancel order - if found match if not cancel the order
 
-#ifndef PRICEPOINT_H    
-#define PRICEPOINT_H
+*/
 
+#pragma once
 #include "defs.h"
 #include<vector>
 #include "TradeReportCapture.h"
 
-
-
-class PricePoint
+class OrderIf
 {
     private:
         OrderNode* m_head = nullptr;
         //OrderNode* m_tail;  //have to implement this it will make easy adding orders at the end
         //double m_pricePoint;
         int m_availableOrders = 0;
-    
-    
+
+
     public:
-        PricePoint(){};
-        ~PricePoint(){delete m_head;};
+        OrderIf(){};
+        ~OrderIf(){delete m_head;};
         void addOrder(Order order,std::vector <TradeReport>& tradeReport);
         void removeOrder(Order order);
         void printOrders();
@@ -30,5 +32,3 @@ class PricePoint
         bool availableOrders();
         TradeReportCapture trc;
 };
-
-#endif

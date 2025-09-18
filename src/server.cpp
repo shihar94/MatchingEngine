@@ -73,7 +73,9 @@ void server::run()
                     continue;
                 }
                     //add to pool set
+                    onConnect(client_sock);
                     add_client(client_sock);
+                    exit(1);
                 
                 }
                 else
@@ -136,11 +138,11 @@ void server::onMessage(int clientSocket)
         //print_send(it->fd, message);
     }
 }
-void server::onConnect()
+void server::onConnect(int ClientSock)
 {
-
+    std::cout << "Client Connected "<<std::endl;
 }
 void server::onDisconnect()
 {
-
+    std::cout << "Client Disconnected "<<std::endl;
 }

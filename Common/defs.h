@@ -4,6 +4,9 @@
 #include <thread>
 #define ORDER_SIZE 40
 #define TR_SIZE 56
+
+
+
 enum ORDER_TYPE
 {
     RESET = -1,
@@ -44,6 +47,11 @@ struct TradeReport
     double price; //8 bytes 
 };
 
+//this is a node which is similar to a linkedlist node
+struct OrderNode{
+    Order order;
+    OrderNode* next = nullptr;
+};
 
 
 template<typename T, typename... A>
