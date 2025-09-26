@@ -14,6 +14,8 @@
 #include <nlohmann/json.hpp>
 #include "ME.h"
 #include "MemoryPool.h"
+#include <MatchingEngineServer.h>
+#include <MatchingEngineCore.h>
 // for convenience
 using json = nlohmann::json;
 
@@ -42,9 +44,15 @@ int  main(int argc , char* argv[]){
     printPID();
     int p = std::stoi((argv[1]));   
 
-    ME server(p);
-    server.init();
-    server.run();
+
+    MatchingEngineCore* meCore = new MatchingEngineCore();
+    MatchingEngineServer me(p , meCore);
+    me.init();
+    me.ProcRun();
+
+    //ME server(p);
+    //server.init();
+    //server.run();
     
 
     //std::string topicName = "orders";

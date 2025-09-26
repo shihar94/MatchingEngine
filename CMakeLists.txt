@@ -31,6 +31,7 @@ set(LINK_LIBRARIES
 include_directories(
         ${PROJECT_SOURCE_DIR}/Include
         ${PROJECT_SOURCE_DIR}/Common
+        ${PROJECT_SOURCE_DIR}/Common/ThreadClass
         ${PROJECT_SOURCE_DIR}/src
         ${PROJECT_SOURCE_DIR}/OrderClass
 )
@@ -42,6 +43,7 @@ add_compile_options("-ggdb;-O3;-Wall")
 
 file(GLOB all_SRCS
         "${PROJECT_SOURCE_DIR}/Include/*.h"
+        "${PROJECT_SOURCE_DIR}/Common/ThreadClass/*.h"
         "${PROJECT_SOURCE_DIR}/Include/kafka/*.h"
         "${PROJECT_SOURCE_DIR}/Include/*.hpp"
         "${PROJECT_SOURCE_DIR}/src/*.cpp"
